@@ -1,0 +1,108 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Users table
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  password  String   // hashed password
+  plaidAccessToken String? // Plaid access token after linking
+  plaidItemId      String? // Plaid item ID
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  accounts     Account[]
+  insights     Insight[]
+  budgets      Budget[]
+
+  @@map("users")
+}
+
+// User's bank accounts (from Plaid)
+model Account {
+  id               String   @id @default(cuid())
+  userId           String
+  plaidAccountId   String   // Plaid's account ID
+  name             String   // "Chase Checking"
+  officialName     String?  // "Chase Bank Checking Account"
+  type             String   // "depository", "credit", "investment"
+  subtype          String   // "checking", "savings", "credit card"
+  currentBalance   Float?
+  availableBalance Float?
+  isoCurrencyCode  String   @default("USD")
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  // Relations
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transactions Transaction[]
+
+  @@unique([userId, plaidAccountId]) // Prevent duplicate accounts
+  @@map("accounts")
+}
+
+// Transactions from bank accounts
+model Transaction {
+  id                  String   @id @default(cuid())
+  accountId           String
+  plaidTransactionId  String   @unique // Plaid's transaction ID
+  amount              Float    // Positive for outflows, negative for inflows
+  description         String   // "Starbucks Coffee #1234"
+  merchantName        String?  // "Starbucks"
+  category            String[] // Plaid's category array
+  aiCategory          String?  // Our AI-generated category
+  aiConfidence        Float?   // AI confidence score (0-1)
+  date                DateTime // Transaction date
+  isoCurrencyCode     String   @default("USD")
+  isPending           Boolean  @default(false)
+  createdAt           DateTime @default(now())
+
+  // Relations  
+  account Account @relation(fields: [accountId], references: [id], onDelete: Cascade)
+
+  @@map("transactions")
+}
+
+// AI-generated insights
+model Insight {
+  id              String   @id @default(cuid())
+  userId          String
+  type            String   // "overspending", "trend", "recommendation", "alert"
+  title           String   // "Dining Overspend Alert"
+  message         String   // "You've spent 40% more on dining this month"
+  confidenceScore Float    // AI confidence (0-1)
+  isRead          Boolean  @default(false)
+  priority        String   @default("medium") // "low", "medium", "high"
+  createdAt       DateTime @default(now())
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("insights")
+}
+
+// User budgets and limits
+model Budget {
+  id          String   @id @default(cuid())
+  userId      String
+  category    String   // "Food & Dining", "Transportation"
+  monthlyLimit Float   // Budget limit per month
+  currentSpend Float   @default(0) // Current month spending
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, category]) // One budget per category per user
+  @@map("budgets")
+}
