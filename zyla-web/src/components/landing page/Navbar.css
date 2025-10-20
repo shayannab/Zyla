@@ -1,0 +1,117 @@
+.navbar-glass {
+  position: fixed;
+  top: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 75vw;
+  max-width: 1100px;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.8rem;
+  border-radius: 2rem;
+  background: rgba(24, 32, 54, 0.55);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
+  backdrop-filter: blur(18px) saturate(180%);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  border: 1.5px solid rgba(255, 255, 255, 0.12);
+  z-index: 100;
+}
+
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: 'Raleway Dots', 'Arial', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #d4e8ff;
+  letter-spacing: 0.08em;
+  padding-left: 0.5rem;
+}
+
+.logo-img {
+  height: 36px;
+  width: auto;
+  object-fit: contain;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-links li a {
+  color: #d8e7feb3;
+  font-size: 0.95rem;
+  font-family: 'Inter', 'Arial', sans-serif;
+  text-decoration: none;
+  padding: 0.5rem 1.1rem;
+  border-radius: 2rem;
+  transition: background 0.2s, color 0.2s;
+  font-weight: 500;
+  backdrop-filter: blur(0.5px);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nav-icon {
+  width: 16px;
+  height: 16px;
+  stroke-width: 2;
+  color: #d8e7feb3;
+  transition: color 0.2s;
+}
+
+.navbar-links li a:hover .nav-icon,
+.navbar-links li .navbar-btn:hover .nav-icon {
+  color: #d4e8ff;
+}
+
+.navbar-links li a:hover,
+.navbar-links li .navbar-btn:hover {
+  background: rgba(212, 232, 255, 0.08);
+  color: #d4e8ff;
+}
+
+.navbar-btn {
+  background: rgba(212, 232, 255, 0.13);
+  color: #d4e8ff;
+  font-weight: 600;
+  border-radius: 2rem;
+  box-shadow: 0 2px 8px rgba(96, 165, 250, 0.08);
+  padding: 0.5rem 1.3rem;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+@media (max-width: 900px) {
+  .navbar-glass {
+    width: 95vw;
+    padding: 0 1rem;
+    min-height: 70px;
+  }
+  .navbar-logo {
+    font-size: 1.8rem;
+  }
+  .logo-img {
+    height: 40px;
+  }
+  .navbar-links {
+    gap: 1.5rem;
+  }
+  .navbar-links li a {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+  }
+  .nav-icon {
+    width: 16px;
+    height: 16px;
+  }
+}

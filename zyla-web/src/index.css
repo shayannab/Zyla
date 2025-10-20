@@ -1,0 +1,217 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+/* Global Styles */
+html {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+body {
+  @apply bg-gray-50 text-gray-900 antialiased;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  @apply w-2;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-400;
+}
+
+/* Custom Components */
+@layer components {
+  /* Button Styles */
+  .btn-primary {
+    @apply bg-primary-500 hover:bg-primary-600 text-white font-medium py-2.5 px-6 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
+  }
+  
+  .btn-secondary {
+    @apply bg-white hover:bg-gray-50 text-gray-700 font-medium py-2.5 px-6 rounded-lg border border-gray-300 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
+  }
+  
+  .btn-success {
+    @apply bg-success-500 hover:bg-success-600 text-white font-medium py-2.5 px-6 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-success-500 focus:ring-offset-2;
+  }
+  
+  .btn-danger {
+    @apply bg-error-500 hover:bg-error-600 text-white font-medium py-2.5 px-6 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-error-500 focus:ring-offset-2;
+  }
+
+  /* Input Styles */
+  .input-primary {
+    @apply block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200;
+  }
+
+  /* Card Styles */
+  .card {
+    @apply bg-white rounded-xl shadow-card border border-gray-100 transition-shadow duration-200;
+  }
+  
+  .card-hover {
+    @apply hover:shadow-card-hover;
+  }
+
+  /* Stats Cards */
+  .stat-card {
+    @apply card card-hover p-6 text-center;
+  }
+  
+  .stat-value {
+    @apply text-3xl font-bold text-gray-900 mb-2;
+  }
+  
+  .stat-label {
+    @apply text-sm font-medium text-gray-600 uppercase tracking-wide;
+  }
+  
+  .stat-change {
+    @apply text-sm font-medium mt-2;
+  }
+  
+  .stat-change.positive {
+    @apply text-success-600;
+  }
+  
+  .stat-change.negative {
+    @apply text-error-600;
+  }
+
+  /* Transaction Styles */
+  .transaction-item {
+    @apply flex items-center justify-between p-4 hover:bg-gray-50 transition-colors duration-150;
+  }
+  
+  .transaction-amount.credit {
+    @apply text-success-600 font-semibold;
+  }
+  
+  .transaction-amount.debit {
+    @apply text-error-600 font-semibold;
+  }
+
+  /* Category Badges */
+  .category-badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+  
+  .category-food {
+    @apply bg-orange-100 text-orange-800;
+  }
+  
+  .category-transport {
+    @apply bg-blue-100 text-blue-800;
+  }
+  
+  .category-shopping {
+    @apply bg-purple-100 text-purple-800;
+  }
+  
+  .category-bills {
+    @apply bg-red-100 text-red-800;
+  }
+  
+  .category-entertainment {
+    @apply bg-green-100 text-green-800;
+  }
+  
+  .category-other {
+    @apply bg-gray-100 text-gray-800;
+  }
+
+  /* Loading States */
+  .loading-spinner {
+    @apply animate-spin rounded-full h-8 w-8 border-b-2 border-primary-500;
+  }
+  
+  .loading-skeleton {
+    @apply animate-pulse bg-gray-200 rounded;
+  }
+
+  /* Navigation */
+  .nav-link {
+    @apply flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors duration-150;
+  }
+  
+  .nav-link.active {
+    @apply bg-primary-50 text-primary-700 border-r-2 border-primary-500;
+  }
+  
+  .nav-link.inactive {
+    @apply text-gray-600 hover:bg-gray-100 hover:text-gray-900;
+  }
+
+  /* Alerts & Notifications */
+  .alert {
+    @apply p-4 rounded-lg border-l-4;
+  }
+  
+  .alert-success {
+    @apply bg-success-50 border-success-400 text-success-800;
+  }
+  
+  .alert-warning {
+    @apply bg-warning-50 border-warning-400 text-warning-800;
+  }
+  
+  .alert-error {
+    @apply bg-error-50 border-error-400 text-error-800;
+  }
+  
+  .alert-info {
+    @apply bg-blue-50 border-blue-400 text-blue-800;
+  }
+}
+
+/* Animations */
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+  .animate-slide-up {
+    animation: slideUp 0.3s ease-out;
+  }
+  
+  .animate-bounce-in {
+    animation: bounceIn 0.6s ease-out;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .no-print {
+    display: none;
+  }
+}
+
+/* Dark mode support (optional) */
+@media (prefers-color-scheme: dark) {
+  /* Add dark mode styles here if needed */
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
