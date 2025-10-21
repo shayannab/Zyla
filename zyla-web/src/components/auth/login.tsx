@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import { authAPI } from '../../services/api';
+import logo from '../../assests/logo.png';
 
 const LoginPage: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -9,6 +10,7 @@ const LoginPage: React.FC = () => {
     password: ''
   });
   const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
   const [loading, setLoading] = useState(false);
   const [checking, setChecking] = useState(true);
   const [error, setError] = useState('');
@@ -58,6 +60,10 @@ const LoginPage: React.FC = () => {
     }
     if (!formData.password) {
       setError('Please enter your password');
+      return;
+    }
+    if (!rememberMe) {
+      setError('Please check the "Remember me" box to continue');
       return;
     }
 
@@ -112,11 +118,7 @@ const LoginPage: React.FC = () => {
           {/* Logo and Header */}
           <div className="text-center mb-8">
             <Link to="/" className="inline-flex items-center mb-6 group">
-              <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-600 rounded-xl flex items-center justify-center group-hover:scale-105 transition-transform">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
-                </svg>
-              </div>
+              <img src={logo} alt="Zyla Logo" className="w-10 h-10 group-hover:scale-105 transition-transform" />
               <span className="ml-3 text-2xl font-bold text-white">Zyla</span>
             </Link>
             
@@ -193,6 +195,8 @@ const LoginPage: React.FC = () => {
                   id="remember-me"
                   name="remember-me"
                   type="checkbox"
+                  checked={rememberMe}
+                  onChange={(e) => setRememberMe(e.target.checked)}
                   className="h-4 w-4 bg-dark-800 border-dark-700 rounded focus:ring-primary-500 text-primary-600"
                 />
                 <label htmlFor="remember-me" className="ml-2 block text-sm text-dark-300">
@@ -250,15 +254,30 @@ const LoginPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Right Side - Branding */}
-      <div className="hidden lg:flex lg:flex-1 lg:relative bg-gradient-to-br from-primary-600 via-primary-700 to-blue-800">
-        <div className="absolute inset-0 bg-black/20"></div>
-        <div className="relative flex-1 flex items-center justify-center p-12">
+      {/* Right Side - Branding with Animated Background */}
+      <div className="hidden lg:flex lg:flex-1 lg:relative bg-gradient-to-br from-blue-900 via-blue-800 to-blue-950 overflow-hidden">
+        {/* Animated Grid Background */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `
+              linear-gradient(to right, rgba(59, 130, 246, 0.1) 1px, transparent 1px),
+              linear-gradient(to bottom, rgba(59, 130, 246, 0.1) 1px, transparent 1px)
+            `,
+            backgroundSize: '40px 40px',
+            animation: 'grid-move 20s linear infinite'
+          }}></div>
+        </div>
+
+        {/* Floating Orbs */}
+        <div className="absolute top-20 left-20 w-64 h-64 bg-blue-500/20 rounded-full blur-3xl animate-float"></div>
+        <div className="absolute bottom-20 right-20 w-80 h-80 bg-indigo-500/20 rounded-full blur-3xl animate-float-delayed"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse-slow"></div>
+
+        {/* Content */}
+        <div className="relative flex-1 flex items-center justify-center p-12 z-10">
           <div className="max-w-md text-center text-white">
-            <div className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center mx-auto mb-8 backdrop-blur-sm">
-              <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
-              </svg>
+            <div className="w-20 h-20 bg-white/10 rounded-2xl flex items-center justify-center mx-auto mb-8 backdrop-blur-sm border border-white/20 shadow-2xl">
+              <img src={logo} alt="Zyla" className="w-12 h-12" />
             </div>
             <h1 className="text-4xl font-bold mb-6">
               Your Money, Smarter
@@ -269,9 +288,33 @@ const LoginPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Decorative Elements */}
-        <div className="absolute top-20 left-20 w-32 h-32 bg-white/5 rounded-full blur-xl"></div>
-        <div className="absolute bottom-20 right-20 w-48 h-48 bg-white/5 rounded-full blur-2xl"></div>
+        <style>{`
+          @keyframes grid-move {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(40px); }
+          }
+          @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+          }
+          @keyframes float-delayed {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-30px); }
+          }
+          @keyframes pulse-slow {
+            0%, 100% { opacity: 0.1; }
+            50% { opacity: 0.2; }
+          }
+          .animate-float {
+            animation: float 6s ease-in-out infinite;
+          }
+          .animate-float-delayed {
+            animation: float-delayed 8s ease-in-out infinite;
+          }
+          .animate-pulse-slow {
+            animation: pulse-slow 4s ease-in-out infinite;
+          }
+        `}</style>
       </div>
     </div>
   );

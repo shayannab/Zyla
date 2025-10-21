@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import { authAPI } from '../../services/api';
+import logo from '../../assests/logo.png';
 
 const RegisterPage: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -12,6 +13,7 @@ const RegisterPage: React.FC = () => {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [acceptTerms, setAcceptTerms] = useState(false);
   const [loading, setLoading] = useState(false);
   const [checking, setChecking] = useState(true);
   const [error, setError] = useState('');
@@ -75,6 +77,10 @@ const RegisterPage: React.FC = () => {
       setError('Passwords do not match');
       return;
     }
+    if (!acceptTerms) {
+      setError('Please accept the Terms of Service and Privacy Policy to continue');
+      return;
+    }
 
     setLoading(true);
     setError('');
@@ -89,15 +95,9 @@ const RegisterPage: React.FC = () => {
       // Store token and user data
       localStorage.setItem('zyla_token', response.data.token);
       localStorage.setItem('zyla_user', JSON.stringify(response.data.user));
-      // Verify token before redirect
-      try {
-        await authAPI.verify(response.data.token);
-        navigate('/dashboard');
-      } catch {
-        setError('Registration succeeded but token is invalid. Please login.');
-        localStorage.removeItem('zyla_token');
-        localStorage.removeItem('zyla_user');
-      }
+      
+      // Navigate to dashboard
+      navigate('/dashboard');
       
     } catch (err: any) {
       console.error('Registration error:', err);
@@ -124,31 +124,27 @@ const RegisterPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-dark-950 flex">
-      {/* Left Side - Register Form */}
+      {/* Left Side - Login Form */}
       <div className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-20 xl:px-24">
         <div className="w-full max-w-sm lg:w-96">
           {/* Logo and Header */}
           <div className="text-center mb-8">
             <Link to="/" className="inline-flex items-center mb-6 group">
-              <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-600 rounded-xl flex items-center justify-center group-hover:scale-105 transition-transform">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
-                </svg>
-              </div>
+              <img src={logo} alt="Zyla Logo" className="w-10 h-10 group-hover:scale-105 transition-transform" />
               <span className="ml-3 text-2xl font-bold text-white">Zyla</span>
             </Link>
             
             <h2 className="text-3xl font-bold text-white mb-2">
-              Create your account
+              Welcome back
             </h2>
-            <p className="text-dark-300">
-              Start your journey to financial freedom
+            <p className="text-dark-400">
+              Sign in to your account to continue
             </p>
           </div>
 
           {/* Error Message */}
           {error && (
-            <div className="mb-6 bg-red-500/10 border border-red-500/50 rounded-lg p-4">
+            <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-lg">
               <p className="text-red-400 text-sm">{error}</p>
             </div>
           )}
@@ -261,6 +257,8 @@ const RegisterPage: React.FC = () => {
                 name="terms"
                 type="checkbox"
                 required
+                checked={acceptTerms}
+                onChange={(e) => setAcceptTerms(e.target.checked)}
                 className="h-4 w-4 mt-1 bg-dark-800 border-dark-700 rounded focus:ring-primary-500 text-primary-600"
               />
               <label htmlFor="terms" className="ml-2 block text-sm text-dark-300">
@@ -315,15 +313,30 @@ const RegisterPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Right Side - Branding */}
-      <div className="hidden lg:flex lg:flex-1 lg:relative bg-gradient-to-br from-primary-600 via-primary-700 to-blue-800">
-        <div className="absolute inset-0 bg-black/20"></div>
-        <div className="relative flex-1 flex items-center justify-center p-12">
+      {/* Right Side - Branding with Animated Background */}
+      <div className="hidden lg:flex lg:flex-1 lg:relative bg-gradient-to-br from-blue-900 via-blue-800 to-blue-950 overflow-hidden">
+        {/* Animated Grid Background */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `
+              linear-gradient(to right, rgba(59, 130, 246, 0.1) 1px, transparent 1px),
+              linear-gradient(to bottom, rgba(59, 130, 246, 0.1) 1px, transparent 1px)
+            `,
+            backgroundSize: '40px 40px',
+            animation: 'grid-move 20s linear infinite'
+          }}></div>
+        </div>
+
+        {/* Floating Orbs */}
+        <div className="absolute top-20 left-20 w-64 h-64 bg-blue-500/20 rounded-full blur-3xl animate-float"></div>
+        <div className="absolute bottom-20 right-20 w-80 h-80 bg-indigo-500/20 rounded-full blur-3xl animate-float-delayed"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse-slow"></div>
+
+        {/* Content */}
+        <div className="relative flex-1 flex items-center justify-center p-12 z-10">
           <div className="max-w-md text-center text-white">
-            <div className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center mx-auto mb-8 backdrop-blur-sm">
-              <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
-              </svg>
+            <div className="w-20 h-20 bg-white/10 rounded-2xl flex items-center justify-center mx-auto mb-8 backdrop-blur-sm border border-white/20 shadow-2xl">
+              <img src={logo} alt="Zyla" className="w-12 h-12" />
             </div>
             <h1 className="text-4xl font-bold mb-6">
               Join Thousands of Smart Savers
@@ -363,9 +376,33 @@ const RegisterPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Decorative Elements */}
-        <div className="absolute top-20 left-20 w-32 h-32 bg-white/5 rounded-full blur-xl"></div>
-        <div className="absolute bottom-20 right-20 w-48 h-48 bg-white/5 rounded-full blur-2xl"></div>
+        <style>{`
+          @keyframes grid-move {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(40px); }
+          }
+          @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+          }
+          @keyframes float-delayed {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-30px); }
+          }
+          @keyframes pulse-slow {
+            0%, 100% { opacity: 0.1; }
+            50% { opacity: 0.2; }
+          }
+          .animate-float {
+            animation: float 6s ease-in-out infinite;
+          }
+          .animate-float-delayed {
+            animation: float-delayed 8s ease-in-out infinite;
+          }
+          .animate-pulse-slow {
+            animation: pulse-slow 4s ease-in-out infinite;
+          }
+        `}</style>
       </div>
     </div>
   );
