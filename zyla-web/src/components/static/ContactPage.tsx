@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { Mail, MessageSquare, Building2, Zap } from 'lucide-react';
+import logo from '../../assests/logo.png';
 import './ContactPage.css';
 
 const ContactPage: React.FC = () => {
@@ -49,7 +51,7 @@ const ContactPage: React.FC = () => {
       <nav className="contact-navbar">
         <div className="contact-navbar-content">
           <Link to="/" className="contact-logo">
-            <div className="contact-logo-icon">Z</div>
+            <img src={logo} alt="Zyla Logo" className="contact-logo-img" />
             <span className="contact-logo-text">Zyla</span>
           </Link>
           <div className="contact-nav-links">
@@ -138,7 +140,9 @@ const ContactPage: React.FC = () => {
           {/* Contact Info */}
           <div className="contact-info-grid scroll-reveal">
             <div className="info-card">
-              <div className="info-icon">📧</div>
+              <div className="info-icon">
+                <Mail size={24} strokeWidth={2} />
+              </div>
               <h3 className="info-title">Email</h3>
               <a 
                 href="mailto:shayannabehera23@gmail.com"
@@ -149,7 +153,9 @@ const ContactPage: React.FC = () => {
             </div>
 
             <div className="info-card">
-              <div className="info-icon">💬</div>
+              <div className="info-icon">
+                <MessageSquare size={24} strokeWidth={2} />
+              </div>
               <h3 className="info-title">Support</h3>
               <p className="info-description">Get help with your account</p>
               <a 
@@ -161,7 +167,9 @@ const ContactPage: React.FC = () => {
             </div>
 
             <div className="info-card">
-              <div className="info-icon">🏢</div>
+              <div className="info-icon">
+                <Building2 size={24} strokeWidth={2} />
+              </div>
               <h3 className="info-title">Business Inquiries</h3>
               <p className="info-description">Partnership and enterprise solutions</p>
               <a 
@@ -174,7 +182,10 @@ const ContactPage: React.FC = () => {
 
             <div className="response-card">
               <div className="response-content">
-                <h3 className="response-title">⚡ Fast Response</h3>
+                <div className="info-icon" style={{ marginBottom: '1rem' }}>
+                  <Zap size={24} strokeWidth={2} />
+                </div>
+                <h3 className="response-title">Fast Response</h3>
                 <p className="response-text">
                   We typically respond within 24 hours during business days. For urgent matters, please mark your subject accordingly.
                 </p>
