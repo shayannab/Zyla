@@ -11,6 +11,7 @@ import BudgetsPage from "./components/dashboard/BudgetsPage";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import AboutUsPage from "./components/static/AboutUsPage";
 import ContactPage from "./components/static/ContactPage";
+import RoadmapPage from "./components/static/RoadmapPage";
 import PrivacyPolicyPage from "./components/static/PrivacyPolicyPage";
 import TermsOfServicePage from "./components/static/TermsOfServicePage";
 import AccountsPage from "./components/dashboard/AccountsPage";
@@ -27,6 +28,7 @@ function App() {
         <Route path="/signup" element={<RegisterPage />} />
   <Route path="/about" element={<AboutUsPage />} />
   <Route path="/contact" element={<ContactPage />} />
+  <Route path="/roadmap" element={<RoadmapPage />} />
   <Route path="/privacy" element={<PrivacyPolicyPage />} />
   <Route path="/terms" element={<TermsOfServicePage />} />
 

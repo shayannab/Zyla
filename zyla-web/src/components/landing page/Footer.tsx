@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./Footer.css";
 import logo from "../../assests/logo.png";
 
@@ -43,22 +44,22 @@ const Footer: React.FC = () => {
                 <li><a href="#features">Features</a></li>
                 <li><a href="#pricing">Pricing</a></li>
                 <li><a href="#security">Security</a></li>
-                <li><a href="#roadmap">Roadmap</a></li>
+                <li><Link to="/roadmap">Roadmap</Link></li>
               </ul>
             </div>
 
             <div className="footer-column">
               <h4 className="footer-heading">Company</h4>
               <ul className="footer-list">
-                <li><a href="/about">About Us</a></li>
-                <li><a href="/contact">Contact</a></li>
+                <li><Link to="/about">About Us</Link></li>
+                <li><Link to="/contact">Contact</Link></li>
               </ul>
             </div>
 
             <div className="footer-column">
               <h4 className="footer-heading">Legal</h4>
               <ul className="footer-list">
-                <li><a href="/terms">Terms of Service</a></li>
+                <li><Link to="/terms">Terms of Service</Link></li>
               </ul>
             </div>
           </div>
