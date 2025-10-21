@@ -1,0 +1,242 @@
+/* Roadmap page dark blue background with dotted grid, matching landing/about */
+.roadmap-page {
+  position: relative;
+  min-height: 100vh;
+  background: radial-gradient(circle at 50% 20%, #1a2747 0%, #0f1419 40%, #010513 100%);
+  overflow-x: hidden;
+  color: #fff;
+}
+
+.roadmap-page::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(rgba(255,255,255,0.07) 1px, transparent 1px),
+    radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
+    radial-gradient(circle at 20% 20%, rgba(29,78,216,0.15), transparent 25%),
+    radial-gradient(circle at 80% 0%, rgba(124,58,237,0.15), transparent 25%),
+    radial-gradient(circle at 50% 100%, rgba(16,185,129,0.12), transparent 20%);
+  background-position: 0 0, 25px 25px, 0 0, 0 0, 0 0;
+  background-size: 50px 50px, 50px 50px, 100% 100%, 100% 100%, 100% 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Glass floating navbar like landing/about */
+.roadmap-navbar {
+  position: fixed;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(55vw, 1100px);
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 16px;
+  z-index: 50;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+.roadmap-navbar-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6rem 1.2rem;
+  min-height: 52px;
+}
+
+.roadmap-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.roadmap-logo-img {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: block;
+}
+
+.roadmap-logo-text {
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.3px;
+  line-height: 1;
+}
+
+.roadmap-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.roadmap-nav-link {
+  color: rgba(255,255,255,0.9);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.roadmap-nav-link:hover { color: #ffffff; }
+
+/* Content wrapper spacing under navbar */
+.roadmap-content {
+  position: relative;
+  z-index: 1;
+  padding-top: 120px;
+  padding-bottom: 60px;
+}
+
+/* Category (quarter) chips - transparent background with glowy border */
+.roadmap-chip {
+  background: transparent;
+  color: rgba(255,255,255,0.92);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 12px;
+  padding: 0.75rem 1.25rem; /* matches px-6 py-3 */
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease, color 0.2s ease;
+}
+
+.roadmap-chip:hover {
+  border-color: rgba(255,255,255,0.28);
+  box-shadow: 0 0 18px rgba(99,102,241,0.25);
+}
+
+.roadmap-chip.is-active {
+  color: #ffffff;
+  border-color: rgba(99,102,241,0.65);
+  box-shadow:
+    0 0 22px rgba(99,102,241,0.45),
+    0 0 12px rgba(168,85,247,0.25),
+    inset 0 0 10px rgba(99,102,241,0.15);
+}
+
+.roadmap-chip:focus-visible {
+  outline: 2px solid rgba(99,102,241,0.7);
+  outline-offset: 2px;
+}
+
+/* Glassy cards with subtle white glow */
+.roadmap-card {
+  background: rgba(15, 23, 42, 0.45);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 16px;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 0 0 rgba(255,255,255,0), inset 0 0 0 rgba(255,255,255,0);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.roadmap-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255,255,255,0.25);
+  box-shadow: 0 0 22px rgba(255,255,255,0.12);
+}
+
+/* Variant: no visible border (for stats tiles) */
+.roadmap-card--no-border {
+  border: none !important;
+}
+
+/* Icon bubble */
+.roadmap-item-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.18);
+}
+
+/* Feature card icons without background */
+.roadmap-feature-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background: transparent;
+  border: none;
+}
+
+/* Section header card */
+.roadmap-section {
+  background: rgba(2, 6, 23, 0.35);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+}
+
+/* Vibe CTA button with sheen and glow */
+.vibe-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 1rem 2rem; /* matches px-8 py-4 */
+  border-radius: 14px;
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  /* Transparent fill with gradient border */
+  background: transparent;
+  border: 2px solid transparent;
+  background-image:
+    linear-gradient(transparent, transparent),
+    linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  box-shadow:
+    0 8px 28px rgba(79,70,229,0.35),
+    inset 0 0 0 1px rgba(255,255,255,0.06);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  overflow: hidden;
+}
+
+.vibe-button::before {
+  content: "";
+  position: absolute;
+  top: -120%;
+  left: -20%;
+  width: 140%;
+  height: 340%;
+  background: linear-gradient(120deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.22) 45%, rgba(255,255,255,0.65) 50%, rgba(255,255,255,0.22) 55%, rgba(255,255,255,0) 100%);
+  transform: translateX(-120%) rotate(20deg);
+  transition: transform 0.7s ease;
+  pointer-events: none;
+}
+
+.vibe-button:hover::before {
+  transform: translateX(120%) rotate(20deg);
+}
+
+.vibe-button:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 0 24px rgba(99,102,241,0.35),
+    0 12px 36px rgba(79,70,229,0.45),
+    inset 0 0 0 1px rgba(255,255,255,0.08);
+}
+
+.vibe-button .arrow {
+  display: inline-block;
+  transform: translateX(0px);
+  transition: transform 0.2s ease;
+}
+
+.vibe-button:hover .arrow { transform: translateX(4px); }
+
+.vibe-button:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 3px rgba(99,102,241,0.5),
+    0 12px 36px rgba(79,70,229,0.45),
+    inset 0 0 0 1px rgba(255,255,255,0.1);
+}
