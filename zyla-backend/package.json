@@ -7,6 +7,7 @@
     "start": "node dist/server.js",
     "build": "tsc",
     "build:watch": "tsc --watch",
+    "debug:auth": "node src/debug-auth.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

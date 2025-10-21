@@ -13,6 +13,23 @@ import userRoutes from './routes/user.routes';
 // Load environment variables
 dotenv.config();
 
+// CRITICAL: Validate environment variables
+const requiredEnvVars = ['JWT_SECRET', 'DATABASE_URL', 'PLAID_CLIENT_ID', 'PLAID_SECRET_KEY'];
+const missingEnvVars = requiredEnvVars.filter(varName => !process.env[varName]);
+
+if (missingEnvVars.length > 0) {
+  console.error('❌ FATAL: Missing required environment variables:');
+  missingEnvVars.forEach(varName => console.error(`   - ${varName}`));
+  console.error('\n💡 Copy .env.example to .env and fill in the values!');
+  process.exit(1); // Stop server if config is missing
+}
+
+// Validate JWT_SECRET strength
+if (process.env.JWT_SECRET && process.env.JWT_SECRET.length < 32) {
+  console.warn('⚠️  WARNING: JWT_SECRET is too short! Use at least 32 characters for security.');
+}
+
+console.log('✅ Environment variables validated successfully');
 
 
 const app = express();

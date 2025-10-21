@@ -82,6 +82,7 @@ export const authenticateToken = async (
         error: 'Invalid token',
         message: 'Please log in again'
       });
+      return; // CRITICAL: Stop execution
     }
 
     if (error instanceof jwt.TokenExpiredError) {
@@ -89,12 +90,14 @@ export const authenticateToken = async (
         error: 'Token expired',
         message: 'Your session has expired. Please log in again.'
       });
+      return; // CRITICAL: Stop execution
     }
 
     res.status(500).json({
       error: 'Authentication failed',
       message: 'Unable to authenticate. Please try again.'
     });
+    return; // CRITICAL: Stop execution
   }
 };
 

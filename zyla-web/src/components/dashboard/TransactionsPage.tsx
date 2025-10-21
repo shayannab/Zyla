@@ -97,15 +97,15 @@ const TransactionsPage: React.FC = () => {
 
           {/* Stats Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-            <div className="bg-gray-800/50 border border-gray-700 rounded-xl p-6">
+            <div className="bg-gray-800/50 border border-gray-700 rounded-2xl p-6">
               <p className="text-gray-400 text-sm mb-1">Total Transactions</p>
               <p className="text-3xl font-bold text-white">{transactions.length}</p>
             </div>
-            <div className="bg-gray-800/50 border border-gray-700 rounded-xl p-6">
+            <div className="bg-gray-800/50 border border-gray-700 rounded-2xl p-6">
               <p className="text-gray-400 text-sm mb-1">Total Spent</p>
               <p className="text-3xl font-bold text-red-400">{formatCurrency(totalSpent)}</p>
             </div>
-            <div className="bg-gray-800/50 border border-gray-700 rounded-xl p-6">
+            <div className="bg-gray-800/50 border border-gray-700 rounded-2xl p-6">
               <p className="text-gray-400 text-sm mb-1">Total Income</p>
               <p className="text-3xl font-bold text-green-400">{formatCurrency(totalIncome)}</p>
             </div>
@@ -113,7 +113,7 @@ const TransactionsPage: React.FC = () => {
         </div>
 
         {/* Filters */}
-        <div className="bg-gray-800/50 border border-gray-700 rounded-xl p-6 mb-6">
+  <div className="bg-gray-800/50 border border-gray-700 rounded-2xl p-6 mb-6">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             {/* Search */}
             <div className="md:col-span-2">
@@ -189,7 +189,7 @@ const TransactionsPage: React.FC = () => {
         </div>
 
         {/* Transactions List */}
-        <div className="bg-gray-800/50 border border-gray-700 rounded-xl overflow-hidden">
+  <div className="bg-gray-800/50 border border-gray-700 rounded-2xl overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
@@ -257,11 +257,11 @@ const TransactionsPage: React.FC = () => {
 
         {/* Pagination */}
         <div className="flex items-center justify-between mt-6">
-          <button className="px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white hover:bg-gray-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+          <button className="px-4 py-2 bg-gray-800 border border-gray-700 rounded-xl text-white hover:bg-gray-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
             ← Previous
           </button>
           <span className="text-gray-400 text-sm">Page 1 of 1</span>
-          <button className="px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white hover:bg-gray-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+          <button className="px-4 py-2 bg-gray-800 border border-gray-700 rounded-xl text-white hover:bg-gray-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
             Next →
           </button>
         </div>

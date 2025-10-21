@@ -100,6 +100,67 @@ const PlaidLinkButton: React.FC<{ onSuccess?: () => void }> = ({ onSuccess }) =>
   );
 };
 
+// Lightweight skeleton helpers
+const Skeleton: React.FC<{ className?: string }> = ({ className = '' }) => (
+  <div className={`animate-pulse bg-gray-700/60 rounded ${className}`} />
+);
+
+const OverviewCardSkeleton = () => (
+  <div className="bg-gray-800/50 border border-gray-700 rounded-2xl p-6 backdrop-blur-sm">
+    <div className="flex items-center justify-between mb-4">
+      <Skeleton className="h-8 w-8 rounded-full" />
+      <Skeleton className="h-5 w-16 rounded-full" />
+    </div>
+    <Skeleton className="h-4 w-28 mb-3" />
+    <Skeleton className="h-7 w-32" />
+  </div>
+);
+
+const AccountItemSkeleton = () => (
+  <div className="p-4 rounded-xl bg-gray-900/50 border border-gray-700">
+    <div className="flex items-center justify-between">
+      <div className="space-y-2">
+        <Skeleton className="h-4 w-40" />
+        <Skeleton className="h-3 w-28" />
+      </div>
+      <div className="text-right space-y-2">
+        <Skeleton className="h-5 w-24 ml-auto" />
+        <Skeleton className="h-3 w-28 ml-auto" />
+      </div>
+    </div>
+  </div>
+);
+
+const InsightItemSkeleton = () => (
+  <div className="p-4 rounded-xl border bg-gray-900/40 border-gray-700">
+    <Skeleton className="h-4 w-40 mb-2" />
+    <Skeleton className="h-3 w-56" />
+  </div>
+);
+
+const TransactionItemSkeleton = () => (
+  <div className="flex items-center justify-between p-4 rounded-xl bg-gray-900/50">
+    <div className="flex items-center gap-3">
+      <Skeleton className="h-10 w-10 rounded-full" />
+      <div className="space-y-2">
+        <Skeleton className="h-4 w-48" />
+        <Skeleton className="h-3 w-40" />
+      </div>
+    </div>
+    <Skeleton className="h-4 w-20" />
+  </div>
+);
+
+const CategoryBarSkeleton = () => (
+  <div className="space-y-2">
+    <div className="flex justify-between">
+      <Skeleton className="h-3 w-28" />
+      <Skeleton className="h-3 w-16" />
+    </div>
+    <Skeleton className="h-2 w-full rounded-full" />
+  </div>
+);
+
 // Main Dashboard Component
 const ZylaDashboard: React.FC = () => {
   const [loading, setLoading] = useState(true);
@@ -195,16 +256,7 @@ const ZylaDashboard: React.FC = () => {
     window.location.href = '/login';
   };
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-indigo-500 mx-auto mb-4"></div>
-          <p className="text-white text-lg">Loading your dashboard...</p>
-        </div>
-      </div>
-    );
-  }
+  // Note: We now show inline skeletons instead of a blocking full-screen loader
 
   const hasPlaidConnection = dashboardData?.user?.hasPlaidConnection;
   const financialSummary = dashboardData?.financial_summary || {};
@@ -227,7 +279,7 @@ const ZylaDashboard: React.FC = () => {
   }));
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+  <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
       {/* Sidebar */}
       <aside className={`fixed left-0 top-0 h-full ${sidebarOpen ? 'w-64' : 'w-20'} bg-black/40 border-r border-gray-800 backdrop-blur-xl transition-all duration-300 z-50`}>
         <div className="flex flex-col h-full p-6">
@@ -291,7 +343,9 @@ const ZylaDashboard: React.FC = () => {
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-3xl font-bold text-white mb-2">Financial Dashboard</h1>
-            <p className="text-gray-400">Welcome back, {dashboardData?.user?.name}</p>
+            <p className="text-gray-400">
+              {loading ? <span className="inline-block"><Skeleton className="h-4 w-40" /></span> : <>Welcome back, {dashboardData?.user?.name}</>}
+            </p>
           </div>
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -302,7 +356,7 @@ const ZylaDashboard: React.FC = () => {
         </div>
 
         {/* No Bank Connection Banner */}
-        {!hasPlaidConnection && (
+        {!loading && !hasPlaidConnection && (
           <div className="mb-8 p-6 rounded-2xl bg-gradient-to-r from-indigo-900/50 to-purple-900/50 border border-indigo-500/30">
             <div className="flex flex-col md:flex-row items-center justify-between gap-4">
               <div className="flex-1">
@@ -315,46 +369,70 @@ const ZylaDashboard: React.FC = () => {
             </div>
           </div>
         )}
+        {loading && (
+          <div className="mb-8 p-6 rounded-2xl bg-gray-800/40 border border-gray-700">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+              <div className="flex-1">
+                <Skeleton className="h-6 w-64 mb-2" />
+                <Skeleton className="h-4 w-80" />
+              </div>
+              <div className="w-full md:w-auto md:min-w-[250px]">
+                <Skeleton className="h-12 w-full rounded-xl" />
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Overview Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <div className="bg-gray-800/50 border border-gray-700 rounded-2xl p-6 backdrop-blur-sm hover:scale-105 transition-transform">
-            <div className="flex items-center justify-between mb-4">
-              <span className="text-3xl">💰</span>
-              <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-green-500/20 text-green-400">
-                {financialSummary.total_balance > 0 ? '+' : ''}{((financialSummary.net_cash_flow / Math.max(financialSummary.total_balance, 1)) * 100).toFixed(1)}%
-              </span>
-            </div>
-            <p className="text-sm text-gray-400 mb-1">Total Balance</p>
-            <p className="text-2xl font-bold text-white">{formatCurrency(financialSummary.total_balance || 0)}</p>
-          </div>
+          {loading ? (
+            <>
+              <OverviewCardSkeleton />
+              <OverviewCardSkeleton />
+              <OverviewCardSkeleton />
+              <OverviewCardSkeleton />
+            </>
+          ) : (
+            <>
+              <div className="bg-gray-800/50 border border-gray-700 rounded-2xl p-6 backdrop-blur-sm hover:scale-105 transition-transform">
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-3xl">💰</span>
+                  <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-green-500/20 text-green-400">
+                    {financialSummary.total_balance > 0 ? '+' : ''}{((financialSummary.net_cash_flow / Math.max(financialSummary.total_balance, 1)) * 100).toFixed(1)}%
+                  </span>
+                </div>
+                <p className="text-sm text-gray-400 mb-1">Total Balance</p>
+                <p className="text-2xl font-bold text-white">{formatCurrency(financialSummary.total_balance || 0)}</p>
+              </div>
 
-          <div className="bg-gray-800/50 border border-gray-700 rounded-2xl p-6 backdrop-blur-sm hover:scale-105 transition-transform">
-            <div className="flex items-center justify-between mb-4">
-              <span className="text-3xl">📊</span>
-            </div>
-            <p className="text-sm text-gray-400 mb-1">Monthly Spending</p>
-            <p className="text-2xl font-bold text-white">{formatCurrency(financialSummary.monthly_spending || 0)}</p>
-          </div>
+              <div className="bg-gray-800/50 border border-gray-700 rounded-2xl p-6 backdrop-blur-sm hover:scale-105 transition-transform">
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-3xl">📊</span>
+                </div>
+                <p className="text-sm text-gray-400 mb-1">Monthly Spending</p>
+                <p className="text-2xl font-bold text-white">{formatCurrency(financialSummary.monthly_spending || 0)}</p>
+              </div>
 
-          <div className="bg-gray-800/50 border border-gray-700 rounded-2xl p-6 backdrop-blur-sm hover:scale-105 transition-transform">
-            <div className="flex items-center justify-between mb-4">
-              <span className="text-3xl">💸</span>
-              <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-green-500/20 text-green-400">
-                Income
-              </span>
-            </div>
-            <p className="text-sm text-gray-400 mb-1">Monthly Income</p>
-            <p className="text-2xl font-bold text-white">{formatCurrency(financialSummary.monthly_income || 0)}</p>
-          </div>
+              <div className="bg-gray-800/50 border border-gray-700 rounded-2xl p-6 backdrop-blur-sm hover:scale-105 transition-transform">
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-3xl">💸</span>
+                  <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-green-500/20 text-green-400">
+                    Income
+                  </span>
+                </div>
+                <p className="text-sm text-gray-400 mb-1">Monthly Income</p>
+                <p className="text-2xl font-bold text-white">{formatCurrency(financialSummary.monthly_income || 0)}</p>
+              </div>
 
-          <div className="bg-gray-800/50 border border-gray-700 rounded-2xl p-6 backdrop-blur-sm hover:scale-105 transition-transform">
-            <div className="flex items-center justify-between mb-4">
-              <span className="text-3xl">🏦</span>
-            </div>
-            <p className="text-sm text-gray-400 mb-1">Connected Accounts</p>
-            <p className="text-2xl font-bold text-white">{financialSummary.accounts_count || 0}</p>
-          </div>
+              <div className="bg-gray-800/50 border border-gray-700 rounded-2xl p-6 backdrop-blur-sm hover:scale-105 transition-transform">
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-3xl">🏦</span>
+                </div>
+                <p className="text-sm text-gray-400 mb-1">Connected Accounts</p>
+                <p className="text-2xl font-bold text-white">{financialSummary.accounts_count || 0}</p>
+              </div>
+            </>
+          )}
         </div>
 
         {/* Accounts & Insights Grid */}
@@ -362,7 +440,13 @@ const ZylaDashboard: React.FC = () => {
           {/* Accounts List */}
           <div className="lg:col-span-2 bg-gray-800/50 border border-gray-700 rounded-2xl p-6 backdrop-blur-sm">
             <h2 className="text-xl font-bold text-white mb-6">Your Accounts</h2>
-            {accounts.length > 0 ? (
+            {loading ? (
+              <div className="space-y-4">
+                <AccountItemSkeleton />
+                <AccountItemSkeleton />
+                <AccountItemSkeleton />
+              </div>
+            ) : accounts.length > 0 ? (
               <div className="space-y-4">
                 {accounts.map((account: any) => (
                   <div key={account.id} className="p-4 rounded-xl bg-gray-900/50 border border-gray-700 hover:border-indigo-500/50 transition-colors">
@@ -396,7 +480,14 @@ const ZylaDashboard: React.FC = () => {
               <span className="text-2xl">🧠</span>
               <h2 className="text-xl font-bold text-white">AI Insights</h2>
             </div>
-            {insights.length > 0 ? (
+            {loading ? (
+              <div className="space-y-3">
+                <InsightItemSkeleton />
+                <InsightItemSkeleton />
+                <InsightItemSkeleton />
+                <InsightItemSkeleton />
+              </div>
+            ) : insights.length > 0 ? (
               <div className="space-y-3">
                 {insights.slice(0, 4).map((insight: any) => (
                   <div
@@ -435,7 +526,16 @@ const ZylaDashboard: React.FC = () => {
                 View All →
               </button>
             </div>
-            {recentTransactions.length > 0 ? (
+            {loading ? (
+              <div className="space-y-3">
+                <TransactionItemSkeleton />
+                <TransactionItemSkeleton />
+                <TransactionItemSkeleton />
+                <TransactionItemSkeleton />
+                <TransactionItemSkeleton />
+                <TransactionItemSkeleton />
+              </div>
+            ) : recentTransactions.length > 0 ? (
               <div className="space-y-3">
                 {recentTransactions.slice(0, 6).map((transaction: any) => (
                   <div key={transaction.id} className="flex items-center justify-between p-4 rounded-xl bg-gray-900/50 hover:bg-gray-900/80 transition-colors">
@@ -470,7 +570,15 @@ const ZylaDashboard: React.FC = () => {
           {/* Spending by Category */}
           <div className="bg-gray-800/50 border border-gray-700 rounded-2xl p-6 backdrop-blur-sm">
             <h2 className="text-xl font-bold text-white mb-6">Spending by Category</h2>
-            {spendingByCategory.length > 0 ? (
+            {loading ? (
+              <div className="space-y-4">
+                <CategoryBarSkeleton />
+                <CategoryBarSkeleton />
+                <CategoryBarSkeleton />
+                <CategoryBarSkeleton />
+                <CategoryBarSkeleton />
+              </div>
+            ) : spendingByCategory.length > 0 ? (
               <div className="space-y-4">
                 {spendingByCategory.slice(0, 5).map((cat: any, index: number) => (
                   <div key={index}>

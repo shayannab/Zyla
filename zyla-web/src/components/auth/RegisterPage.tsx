@@ -3,12 +3,15 @@ import { Link, useNavigate } from 'react-router-dom';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import { authAPI } from '../../services/api';
 
-const LoginPage: React.FC = () => {
+const RegisterPage: React.FC = () => {
   const [formData, setFormData] = useState({
+    name: '',
     email: '',
-    password: ''
+    password: '',
+    confirmPassword: ''
   });
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [checking, setChecking] = useState(true);
   const [error, setError] = useState('');
@@ -48,16 +51,28 @@ const LoginPage: React.FC = () => {
     setShowPassword(prev => !prev);
   }, []);
 
+  const toggleConfirmPasswordVisibility = useCallback(() => {
+    setShowConfirmPassword(prev => !prev);
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     // Validation
+    if (!formData.name || formData.name.length < 2) {
+      setError('Name must be at least 2 characters');
+      return;
+    }
     if (!formData.email || !formData.email.includes('@')) {
       setError('Please enter a valid email address');
       return;
     }
-    if (!formData.password) {
-      setError('Please enter your password');
+    if (!formData.password || formData.password.length < 6) {
+      setError('Password must be at least 6 characters');
+      return;
+    }
+    if (formData.password !== formData.confirmPassword) {
+      setError('Passwords do not match');
       return;
     }
 
@@ -65,28 +80,31 @@ const LoginPage: React.FC = () => {
     setError('');
 
     try {
-      const response = await authAPI.login(formData);
+      const response = await authAPI.register({
+        name: formData.name,
+        email: formData.email,
+        password: formData.password
+      });
       
       // Store token and user data
       localStorage.setItem('zyla_token', response.data.token);
       localStorage.setItem('zyla_user', JSON.stringify(response.data.user));
-      
       // Verify token before redirect
       try {
         await authAPI.verify(response.data.token);
         navigate('/dashboard');
       } catch {
-        setError('Login succeeded but token is invalid. Please try again.');
+        setError('Registration succeeded but token is invalid. Please login.');
         localStorage.removeItem('zyla_token');
         localStorage.removeItem('zyla_user');
       }
       
     } catch (err: any) {
-      console.error('Login error:', err);
+      console.error('Registration error:', err);
       setError(
         err.response?.data?.message || 
         err.response?.data?.error ||
-        'Login failed. Please check your credentials and try again.'
+        'Registration failed. Please try again.'
       );
     } finally {
       setLoading(false);
@@ -106,7 +124,7 @@ const LoginPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-dark-950 flex">
-      {/* Left Side - Login Form */}
+      {/* Left Side - Register Form */}
       <div className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-20 xl:px-24">
         <div className="w-full max-w-sm lg:w-96">
           {/* Logo and Header */}
@@ -121,22 +139,40 @@ const LoginPage: React.FC = () => {
             </Link>
             
             <h2 className="text-3xl font-bold text-white mb-2">
-              Welcome back
+              Create your account
             </h2>
-            <p className="text-dark-400">
-              Sign in to your account to continue
+            <p className="text-dark-300">
+              Start your journey to financial freedom
             </p>
           </div>
 
           {/* Error Message */}
           {error && (
-            <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-lg">
+            <div className="mb-6 bg-red-500/10 border border-red-500/50 rounded-lg p-4">
               <p className="text-red-400 text-sm">{error}</p>
             </div>
           )}
 
-          {/* Login Form */}
-          <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Register Form */}
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <div>
+              <label htmlFor="name" className="block text-sm font-medium text-dark-300 mb-2">
+                Full Name
+              </label>
+              <input
+                id="name"
+                name="name"
+                type="text"
+                required
+                autoComplete="name"
+                className="block w-full px-4 py-3 bg-dark-800 border border-dark-700 rounded-lg text-white placeholder-dark-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                placeholder="Enter your full name"
+                value={formData.name}
+                onChange={handleChange}
+                disabled={loading}
+              />
+            </div>
+
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-dark-300 mb-2">
                 Email address
@@ -165,9 +201,9 @@ const LoginPage: React.FC = () => {
                   name="password"
                   type={showPassword ? 'text' : 'password'}
                   required
-                  autoComplete="current-password"
+                  autoComplete="new-password"
                   className="block w-full px-4 py-3 pr-12 bg-dark-800 border border-dark-700 rounded-lg text-white placeholder-dark-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
-                  placeholder="Enter your password"
+                  placeholder="Create a password (6+ characters)"
                   value={formData.password}
                   onChange={handleChange}
                   disabled={loading}
@@ -187,27 +223,56 @@ const LoginPage: React.FC = () => {
               </div>
             </div>
 
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
+            <div>
+              <label htmlFor="confirmPassword" className="block text-sm font-medium text-dark-300 mb-2">
+                Confirm Password
+              </label>
+              <div className="relative">
                 <input
-                  id="remember-me"
-                  name="remember-me"
-                  type="checkbox"
-                  className="h-4 w-4 bg-dark-800 border-dark-700 rounded focus:ring-primary-500 text-primary-600"
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  type={showConfirmPassword ? 'text' : 'password'}
+                  required
+                  autoComplete="new-password"
+                  className="block w-full px-4 py-3 pr-12 bg-dark-800 border border-dark-700 rounded-lg text-white placeholder-dark-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                  placeholder="Confirm your password"
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                  disabled={loading}
                 />
-                <label htmlFor="remember-me" className="ml-2 block text-sm text-dark-300">
-                  Remember me
-                </label>
-              </div>
-
-              <div className="text-sm">
-                <Link 
-                  to="/register" 
-                  className="font-medium text-primary-400 hover:text-primary-300 transition-colors"
+                <button
+                  type="button"
+                  className="absolute inset-y-0 right-0 flex items-center pr-3"
+                  onClick={toggleConfirmPasswordVisibility}
+                  disabled={loading}
                 >
-                  Need an account?
-                </Link>
+                  {showConfirmPassword ? (
+                    <EyeSlashIcon className="h-5 w-5 text-dark-400 hover:text-dark-300" />
+                  ) : (
+                    <EyeIcon className="h-5 w-5 text-dark-400 hover:text-dark-300" />
+                  )}
+                </button>
               </div>
+            </div>
+
+            <div className="flex items-start">
+              <input
+                id="terms"
+                name="terms"
+                type="checkbox"
+                required
+                className="h-4 w-4 mt-1 bg-dark-800 border-dark-700 rounded focus:ring-primary-500 text-primary-600"
+              />
+              <label htmlFor="terms" className="ml-2 block text-sm text-dark-300">
+                I agree to the{' '}
+                <Link to="/terms" className="text-primary-400 hover:text-primary-300">
+                  Terms of Service
+                </Link>
+                {' '}and{' '}
+                <Link to="/privacy" className="text-primary-400 hover:text-primary-300">
+                  Privacy Policy
+                </Link>
+              </label>
             </div>
 
             <button
@@ -218,23 +283,23 @@ const LoginPage: React.FC = () => {
               {loading ? (
                 <>
                   <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-3"></div>
-                  Signing in...
+                  Creating account...
                 </>
               ) : (
-                'Sign in'
+                'Create account'
               )}
             </button>
           </form>
 
-          {/* Sign Up Link */}
+          {/* Login Link */}
           <div className="mt-6 text-center">
             <p className="text-dark-400 text-sm">
-              Don't have an account?{' '}
+              Already have an account?{' '}
               <Link 
-                to="/register" 
+                to="/login" 
                 className="font-medium text-primary-400 hover:text-primary-300 transition-colors"
               >
-                Sign up for free
+                Sign in
               </Link>
             </p>
           </div>
@@ -261,11 +326,40 @@ const LoginPage: React.FC = () => {
               </svg>
             </div>
             <h1 className="text-4xl font-bold mb-6">
-              Your Money, Smarter
+              Join Thousands of Smart Savers
             </h1>
             <p className="text-xl text-blue-100 mb-8 leading-relaxed">
-              Connect your accounts and let AI analyze your spending patterns to help you save money and achieve your financial goals.
+              AI-powered insights that help you understand your spending, save money, and achieve your financial goals faster.
             </p>
+            <div className="space-y-4 text-left">
+              <div className="flex items-start">
+                <svg className="w-6 h-6 text-green-400 mr-3 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                <div>
+                  <p className="font-medium">Bank-Level Security</p>
+                  <p className="text-blue-200 text-sm">256-bit encryption & read-only access</p>
+                </div>
+              </div>
+              <div className="flex items-start">
+                <svg className="w-6 h-6 text-green-400 mr-3 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                <div>
+                  <p className="font-medium">AI-Powered Insights</p>
+                  <p className="text-blue-200 text-sm">Personalized recommendations to save money</p>
+                </div>
+              </div>
+              <div className="flex items-start">
+                <svg className="w-6 h-6 text-green-400 mr-3 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                <div>
+                  <p className="font-medium">Always Free</p>
+                  <p className="text-blue-200 text-sm">No hidden fees, no credit card required</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -277,4 +371,4 @@ const LoginPage: React.FC = () => {
   );
 };
 
-export default LoginPage;
+export default RegisterPage;

@@ -110,19 +110,19 @@ const BudgetsPage: React.FC = () => {
 
         {/* Summary Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div className="bg-gray-800/50 border border-gray-700 rounded-xl p-6">
+          <div className="bg-gray-800/50 border border-gray-700 rounded-2xl p-6">
             <p className="text-gray-400 text-sm mb-1">Total Budget</p>
             <p className="text-3xl font-bold text-white">{formatCurrency(totalBudget)}</p>
             <p className="text-sm text-gray-400 mt-2">across {budgets.length} categories</p>
           </div>
-          <div className="bg-gray-800/50 border border-gray-700 rounded-xl p-6">
+          <div className="bg-gray-800/50 border border-gray-700 rounded-2xl p-6">
             <p className="text-gray-400 text-sm mb-1">Total Spent</p>
             <p className="text-3xl font-bold text-red-400">{formatCurrency(totalSpent)}</p>
             <p className="text-sm text-gray-400 mt-2">
               {totalBudget > 0 ? ((totalSpent / totalBudget) * 100).toFixed(1) : '0.0'}% of budget
             </p>
           </div>
-          <div className="bg-gray-800/50 border border-gray-700 rounded-xl p-6">
+          <div className="bg-gray-800/50 border border-gray-700 rounded-2xl p-6">
             <p className="text-gray-400 text-sm mb-1">Remaining</p>
             <p className={`text-3xl font-bold ${totalRemaining >= 0 ? 'text-green-400' : 'text-red-400'}`}>
               {formatCurrency(totalRemaining)}
@@ -143,7 +143,7 @@ const BudgetsPage: React.FC = () => {
             return (
               <div
                 key={budget.id}
-                className="bg-gray-800/50 border border-gray-700 rounded-xl p-6 hover:border-gray-600 transition-colors"
+                className="bg-gray-800/50 border border-gray-700 rounded-2xl p-6 hover:border-gray-600 transition-colors"
               >
                 <div className="flex items-start justify-between mb-4">
                   <div>
@@ -210,7 +210,7 @@ const BudgetsPage: React.FC = () => {
           {/* Add Budget Card */}
           <button
             onClick={() => setShowAddModal(true)}
-            className="bg-gray-800/30 border-2 border-dashed border-gray-700 rounded-xl p-6 hover:border-indigo-500 hover:bg-gray-800/50 transition-all flex flex-col items-center justify-center min-h-[280px] group"
+            className="bg-gray-800/30 border-2 border-dashed border-gray-700 rounded-2xl p-6 hover:border-indigo-500 hover:bg-gray-800/50 transition-all flex flex-col items-center justify-center min-h-[280px] group"
           >
             <div className="w-16 h-16 bg-gradient-to-br from-indigo-500/20 to-purple-500/20 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
               <span className="text-3xl">+</span>

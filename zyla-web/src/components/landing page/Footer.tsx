@@ -51,11 +51,11 @@ const Footer: React.FC = () => {
             <div className="footer-column">
               <h4 className="footer-heading">Company</h4>
               <ul className="footer-list">
-                <li><a href="#about">About Us</a></li>
+                <li><a href="/about">About Us</a></li>
                 <li><a href="#careers">Careers</a></li>
                 <li><a href="#blog">Blog</a></li>
                 <li><a href="#press">Press Kit</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="/contact">Contact</a></li>
               </ul>
             </div>
 
@@ -73,8 +73,8 @@ const Footer: React.FC = () => {
             <div className="footer-column">
               <h4 className="footer-heading">Legal</h4>
               <ul className="footer-list">
-                <li><a href="#privacy">Privacy Policy</a></li>
-                <li><a href="#terms">Terms of Service</a></li>
+                <li><a href="/privacy">Privacy Policy</a></li>
+                <li><a href="/terms">Terms of Service</a></li>
                 <li><a href="#cookies">Cookie Policy</a></li>
                 <li><a href="#compliance">Compliance</a></li>
                 <li><a href="#licenses">Licenses</a></li>
