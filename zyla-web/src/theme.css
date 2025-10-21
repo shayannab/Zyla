@@ -1,0 +1,53 @@
+/* Global Theme Variables */
+:root {
+  /* Backgrounds */
+  --bg: #010513;
+  --bg-gradient-start: #0f1419;
+  --bg-gradient-end: #050810;
+
+  /* Surfaces and borders */
+  --surface: rgba(255, 255, 255, 0.02);
+  --surface-strong: rgba(255, 255, 255, 0.05);
+  --border: rgba(255, 255, 255, 0.1);
+  --border-strong: rgba(255, 255, 255, 0.2);
+
+  /* Text */
+  --text: #ffffff;
+  --text-muted: rgba(255, 255, 255, 0.7);
+  --text-soft: rgba(148, 163, 184, 0.8);
+
+  /* Accent (indigo → purple) */
+  --accent: #60a5fa;
+  --accent-2: #a78bfa;
+  --accent-soft: rgba(96, 165, 250, 0.1);
+  --accent-softer: rgba(96, 165, 250, 0.08);
+  --accent-border: rgba(96, 165, 250, 0.2);
+
+  /* Semantic */
+  --success: #10b981;
+  --warning: #f59e0b;
+  --error: #ef4444;
+}
+
+/* Reusable background helpers */
+.app-bg {
+  background: linear-gradient(180deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+}
+
+.app-surface {
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.accent-text {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.accent-pill {
+  color: rgba(96, 165, 250, 0.8);
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-border);
+}

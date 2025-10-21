@@ -72,9 +72,6 @@ const HeroPage: React.FC = () => {
           51.5074°N, 0.1278°W<br />
           LONDON, UK
         </div>
-        <div className="data-overlay time-display">
-          {new Date().toLocaleTimeString('en-US', { hour12: false })} GMT
-        </div>
         <div className="data-overlay data-bottom-left">
           PORTFOLIO: $127,450<br />
           <span className="pulse-green">↑ +12.5%</span> (24h)
@@ -86,7 +83,7 @@ const HeroPage: React.FC = () => {
 
         <div className="hero-content" style={{ position: 'relative', transform: `translateY(${scrollY * 0.5}px)` }}>
           <div style={{ position: 'relative', zIndex: 2 }} className="hero-text-container">
-            <h1 className="hero-title nowrap">Your Money Deserves,</h1>
+            <h1 className="hero-title nowrap">Your Money Deserves</h1>
             <h1 className="hero-title"><span className="glow-text">Better Insights</span></h1>
             <p className="hero-subtitle">
              Track your spending patterns, analyze trends, and get actionable recommendations — all in one intelligent dashboard designed to help you take control of your finances.

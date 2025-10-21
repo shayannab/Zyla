@@ -1,14 +1,16 @@
 .how-it-works-section {
   width: 100vw;
-  min-height: 100vh;
-  background: #010513; /* Unified background */
+  min-height: 70vh;
+  background: var(--bg);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 4rem 6vw;
+  padding: 3rem 6vw;
   position: relative;
-  overflow: hidden;
+  overflow-x: hidden;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 .how-it-works-section::before {
@@ -50,11 +52,11 @@
 }
 
 .how-title {
-  color: #ffffff;
-  font-size: 2rem;
+  color: var(--text);
+  font-size: 1.8rem;
   font-family: 'Inter', 'Arial', sans-serif;
   font-weight: 600;
-  margin-bottom: 2.5rem;
+  margin-bottom: 2rem;
   line-height: 1.2;
   letter-spacing: -0.01em;
   text-align: center;
@@ -64,26 +66,26 @@
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  gap: 1.5rem;
+  gap: 1.2rem;
   width: 100%;
-  max-width: 1200px;
-  flex-wrap: wrap;
+  max-width: 1400px;
+  flex-wrap: nowrap;
 }
 
 .step-wrapper {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1.2rem;
 }
 
 .step-card {
-  background: rgba(255,255,255,0.02);
+  background: var(--surface);
   border-radius: 1rem;
-  border: 1px solid rgba(255,255,255,0.1);
+  border: 1px solid var(--border);
   box-shadow: 0 1px 8px rgba(0,0,0,0.1);
-  width: 240px;
-  min-height: 280px;
-  padding: 1.5rem 1.2rem;
+  width: 220px;
+  min-height: 240px;
+  padding: 1.2rem 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -108,16 +110,16 @@
 
 .step-number {
   position: absolute;
-  top: -12px;
-  right: 18px;
-  font-size: 2.2rem;
+  top: -10px;
+  right: 15px;
+  font-size: 2rem;
   font-weight: 900;
   color: rgba(96, 165, 250, 0.15);
   font-family: 'Inter', 'Arial', sans-serif;
 }
 
 .step-icon {
-  margin-bottom: 1.2rem;
+  margin-bottom: 1rem;
   transition: transform 0.3s ease;
   display: flex;
   align-items: center;
@@ -125,7 +127,7 @@
 }
 
 .step-icon svg {
-  color: #ffffff;
+  color: var(--text);
   stroke-width: 1.5;
 }
 
@@ -134,18 +136,43 @@
 }
 
 .step-title {
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 600;
-  color: #ffffff;
-  margin-bottom: 0.8rem;
+  color: var(--text);
+  margin-bottom: 0.6rem;
   font-family: 'Inter', 'Arial', sans-serif;
 }
 
 .step-desc {
-  font-size: 0.85rem;
-  color: rgba(255,255,255,0.7);
-  line-height: 1.6;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.5;
   font-family: 'Inter', 'Arial', sans-serif;
+}
+
+@media (max-width: 900px) {
+  .steps-container {
+    gap: 1rem;
+  }
+  .step-card {
+    width: 200px;
+    min-height: 220px;
+  }
+}
+
+@media (max-width: 600px) {
+  .steps-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .step-wrapper {
+    width: 100%;
+    justify-content: center;
+  }
+  .step-card {
+    width: 90%;
+    max-width: 300px;
+  }
 }
 
 .step-connector {
@@ -172,6 +199,14 @@
   
   .step-connector {
     display: none;
+  }
+}
+
+/* Desktop: give a bit more horizontal room so 4 cards fit comfortably */
+@media (min-width: 1200px) {
+  .how-it-works-section {
+    padding-left: 3vw;
+    padding-right: 3vw;
   }
 }
 

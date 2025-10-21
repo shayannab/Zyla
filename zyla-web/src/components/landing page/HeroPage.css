@@ -1,6 +1,9 @@
 .hero-bg {
   min-height: 100vh;
   width: 100vw;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
   background: 
     radial-gradient(circle at center, rgba(96, 165, 250, 0.08) 0.5px, transparent 0.5px),
     radial-gradient(circle at center, rgba(59, 130, 246, 0.04) 1px, transparent 1px),
@@ -14,8 +17,11 @@
   align-items: center;
   justify-content: center;
   position: relative;
-  overflow: hidden;
-  padding-top: 7rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding-top: 5rem;
+  left: 0;
+  right: 0;
 }
 
 /* Animated Cursor Glow */
@@ -77,7 +83,7 @@
 }
 
 .coords-top-left { top: 8%; left: 5%; }
-.coords-top-right { top: 12%; right: 5%; text-align: right; }
+.coords-top-right { top: 8%; right: 5%; text-align: right; }
 .data-bottom-left { bottom: 15%; left: 5%; }
 .data-bottom-right { bottom: 20%; right: 5%; text-align: right; }
 .time-display { top: 8%; right: 20%; }
@@ -110,13 +116,13 @@
   flex-direction: column;
   align-items: center;
   margin-top: 0;
-  padding-top: 7rem;
+  padding-top: 5rem;
   transition: transform 0.1s ease-out;
 }
 
 .hero-wheel {
-  width: 500px;
-  height: 500px;
+  width: 600px;
+  height: 600px;
   animation: spin 20s linear infinite;
   margin-bottom: 2rem;
   filter: drop-shadow(0 0 60px rgba(212, 232, 255, 0.4));
@@ -154,14 +160,14 @@
 
 .hero-title {
   font-family: 'Inter', -apple-system, sans-serif;
-  font-size: 3.8rem;
+  font-size: 3.5rem;
   font-weight: 500;
   color: #ffffff;
   letter-spacing: -0.01em;
   margin-bottom: 1rem;
   line-height: 1.15;
   max-width: 900px;
-  margin-top: 2rem;
+  margin-top: 1.5rem;
 }
 
 /* Subtle spacing between stacked headings */
@@ -179,30 +185,30 @@
 }
 
 .hero-subtitle {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   color: #94a3b8;
   font-family: 'Inter', sans-serif;
   font-weight: 400;
   line-height: 1.7;
-  max-width: 750px;
-  margin: 0 auto 2.5rem auto;
+  max-width: 700px;
+  margin: 0 auto 2rem auto;
   letter-spacing: 0.01em;
 }
 
 .hero-cta-buttons {
   display: flex;
-  gap: 1.5rem;
-  margin-bottom: 3rem;
+  gap: 1.2rem;
+  margin-bottom: 2.5rem;
   align-items: center;
 }
 
 .cta-primary {
-  padding: 0.85rem 1.8rem;
+  padding: 0.8rem 1.6rem;
   background: transparent;
   border: 1.5px solid rgba(255,255,255,0.8);
   border-radius: 0.75rem;
   color: #ffffff;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 600;
   font-family: 'Inter', sans-serif;
   cursor: pointer;
@@ -230,8 +236,8 @@
 .hero-stats {
   display: flex;
   align-items: center;
-  gap: 2.5rem;
-  padding: 1.5rem 2.5rem;
+  gap: 2rem;
+  padding: 1.2rem 2rem;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 1rem;
@@ -246,7 +252,7 @@
 }
 
 .stat-number {
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   font-weight: 700;
   color: #ffffff;
   font-family: 'Inter', sans-serif;
@@ -328,24 +334,57 @@
 /* Responsive */
 @media (max-width: 1024px) {
   .hero-wheel {
-    width: 600px;
-    height: 600px;
-    top: -300px;
+    width: 450px;
+    height: 450px;
+    top: -225px;
+  }
+  .hero-title {
+    font-size: 3rem;
   }
 }
 
 @media (max-width: 768px) {
+  .hero-bg {
+    min-height: 80vh;
+    padding-top: 4rem;
+  }
+  
+  .hero-content {
+    padding-top: 3rem;
+  }
+  
   .hero-wheel {
-    width: 500px;
-    height: 500px;
-    top: -250px;
+    width: 400px;
+    height: 400px;
+    top: -200px;
   }
 
-  .hero-title { font-size: 3.2rem; /* clearer on mobile */ }
+  .hero-title { 
+    font-size: 2.5rem;
+    max-width: 90%;
+  }
 
   .hero-subtitle {
-    font-size: 1.1rem;
+    font-size: 1rem;
     padding: 0 1rem;
+    max-width: 90%;
+  }
+  
+  .hero-cta-buttons {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  
+  .cta-primary {
+    width: 100%;
+    max-width: 250px;
+    justify-content: center;
+  }
+  
+  .hero-stats {
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    padding: 1rem 1.5rem;
   }
   
   .data-overlay {
@@ -355,12 +394,22 @@
 
 @media (max-width: 480px) {
   .hero-wheel {
-    width: 400px;
-    height: 400px;
-    top: -200px;
+    width: 350px;
+    height: 350px;
+    top: -175px;
   }
 
-  .hero-title { font-size: 2.6rem; }
+  .hero-title { 
+    font-size: 2rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 0.9rem;
+  }
+  
+  .stat-number {
+    font-size: 1.2rem;
+  }
   
   .data-overlay {
     font-size: 0.6rem;

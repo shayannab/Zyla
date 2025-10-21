@@ -1,7 +1,7 @@
 .brands-section {
   width: 100vw;
-  background: #010513; /* Unified background to blend seamlessly */
-  padding: 6rem 0;
+  background: var(--bg);
+  padding: 3rem 0;
   overflow: hidden;
   position: relative;
 }
@@ -26,39 +26,39 @@
 
 .brands-header {
   text-align: center;
-  margin-bottom: 4rem;
+  margin-bottom: 2.5rem;
   padding: 0 2rem;
 }
 
 .brands-badge {
   display: inline-block;
   color: rgba(96, 165, 250, 0.8);
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-family: 'Inter', sans-serif;
   font-weight: 600;
   letter-spacing: 0.15em;
-  padding: 0.4rem 1rem;
-  background: rgba(96, 165, 250, 0.1);
-  border: 1px solid rgba(96, 165, 250, 0.2);
+  padding: 0.3rem 0.8rem;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-border);
   border-radius: 2rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   text-transform: uppercase;
 }
 
 .brands-title {
   font-family: 'Inter', sans-serif;
-  font-size: 2.5rem;
+  font-size: 1.8rem;
   font-weight: 700;
-  color: #ffffff;
-  margin-bottom: 1rem;
+  color: var(--text);
+  margin-bottom: 0.8rem;
   letter-spacing: -0.02em;
   line-height: 1.2;
 }
 
 .brands-subtitle {
   font-family: 'Inter', sans-serif;
-  font-size: 1.1rem;
-  color: rgba(148, 163, 184, 0.8);
+  font-size: 0.95rem;
+  color: var(--text-soft);
   max-width: 600px;
   margin: 0 auto;
   line-height: 1.6;
@@ -68,7 +68,7 @@
   position: relative;
   overflow: hidden;
   width: 100%;
-  padding: 2rem 0;
+  padding: 1.5rem 0;
   mask: linear-gradient(
     to right,
     transparent 0%,
@@ -88,7 +88,7 @@
 .brands-track {
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: 1.5rem;
   animation: scroll-brands 40s linear infinite;
   width: max-content;
 }
@@ -108,16 +108,16 @@
 
 .brand-card {
   flex: 0 0 auto;
-  width: 220px;
-  height: 140px;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 1.2rem;
+  width: 180px;
+  height: 110px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
+  gap: 0.7rem;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   backdrop-filter: blur(10px);
   position: relative;
@@ -145,18 +145,18 @@
 .brand-card:hover {
   background: rgba(255, 255, 255, 0.04);
   border-color: rgba(96, 165, 250, 0.3);
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 12px 40px rgba(96, 165, 250, 0.15);
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 8px 30px rgba(96, 165, 250, 0.15);
 }
 
 .brand-icon {
-  font-size: 3rem;
+  font-size: 2.5rem;
   transition: all 0.4s ease;
   filter: drop-shadow(0 0 10px rgba(96, 165, 250, 0.2));
 }
 
 .brand-card:hover .brand-icon {
-  transform: scale(1.15) rotate(5deg);
+  transform: scale(1.1) rotate(5deg);
   filter: drop-shadow(0 0 20px rgba(96, 165, 250, 0.4));
 }
 
@@ -167,10 +167,10 @@
 
 .brand-name {
   font-family: 'Inter', sans-serif;
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 600;
-  color: #ffffff;
-  margin-bottom: 0.3rem;
+  color: var(--text);
+  margin-bottom: 0.2rem;
   letter-spacing: -0.01em;
   transition: color 0.3s ease;
 }
@@ -181,7 +181,7 @@
 
 .brand-tag {
   font-family: 'Inter', sans-serif;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: rgba(148, 163, 184, 0.7);
   letter-spacing: 0.03em;
   transition: color 0.3s ease;

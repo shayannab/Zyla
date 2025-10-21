@@ -89,17 +89,9 @@ const Footer: React.FC = () => {
             <p className="footer-copyright">
               © 2024 Zyla. All rights reserved.
             </p>
-            <div className="footer-badges">
-              <span className="badge-item">🔒 Bank-Grade Security</span>
-              <span className="badge-item">✓ SOC 2 Certified</span>
-              <span className="badge-item">🛡️ GDPR Compliant</span>
-            </div>
+          
           </div>
-          <div className="footer-bottom-right">
-            <p className="footer-note">
-              Made with 💙 for better financial futures
-            </p>
-          </div>
+    
         </div>
       </div>
     </footer>
