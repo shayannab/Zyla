@@ -43,7 +43,6 @@ const Footer: React.FC = () => {
                 <li><a href="#features">Features</a></li>
                 <li><a href="#pricing">Pricing</a></li>
                 <li><a href="#security">Security</a></li>
-                <li><a href="#integrations">Integrations</a></li>
                 <li><a href="#roadmap">Roadmap</a></li>
               </ul>
             </div>
@@ -52,32 +51,14 @@ const Footer: React.FC = () => {
               <h4 className="footer-heading">Company</h4>
               <ul className="footer-list">
                 <li><a href="/about">About Us</a></li>
-                <li><a href="#careers">Careers</a></li>
-                <li><a href="#blog">Blog</a></li>
-                <li><a href="#press">Press Kit</a></li>
                 <li><a href="/contact">Contact</a></li>
-              </ul>
-            </div>
-
-            <div className="footer-column">
-              <h4 className="footer-heading">Resources</h4>
-              <ul className="footer-list">
-                <li><a href="#docs">Documentation</a></li>
-                <li><a href="#api">API Reference</a></li>
-                <li><a href="#guides">Guides</a></li>
-                <li><a href="#support">Support</a></li>
-                <li><a href="#status">System Status</a></li>
               </ul>
             </div>
 
             <div className="footer-column">
               <h4 className="footer-heading">Legal</h4>
               <ul className="footer-list">
-                <li><a href="/privacy">Privacy Policy</a></li>
                 <li><a href="/terms">Terms of Service</a></li>
-                <li><a href="#cookies">Cookie Policy</a></li>
-                <li><a href="#compliance">Compliance</a></li>
-                <li><a href="#licenses">Licenses</a></li>
               </ul>
             </div>
           </div>

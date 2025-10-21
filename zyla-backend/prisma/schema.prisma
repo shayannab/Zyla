@@ -103,6 +103,13 @@ model Budget {
   // Relations
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  @@map("budgets")
+}
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   @@unique([userId, category]) // One budget per category per user
   @@map("budgets")
 }
