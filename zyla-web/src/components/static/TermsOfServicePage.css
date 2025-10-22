@@ -1,0 +1,180 @@
+/* Terms of Service Page - keep current bg, add glass navbar and dramatic typography */
+.terms-page {
+  position: relative;
+  min-height: 100vh;
+  background: linear-gradient(to bottom right, rgb(17, 24, 39), rgb(31, 41, 55), rgb(17, 24, 39));
+  overflow-x: hidden;
+  color: #fff;
+}
+
+.terms-page::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(rgba(255,255,255,0.07) 1px, transparent 1px),
+    radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px);
+  background-position: 0 0, 25px 25px;
+  background-size: 50px 50px, 50px 50px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Glass floating navbar */
+.terms-navbar {
+  position: fixed;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(55vw, 1100px);
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 16px;
+  z-index: 50;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+.terms-navbar-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6rem 1.2rem;
+  min-height: 52px;
+}
+
+.terms-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.terms-logo-img {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: block;
+}
+
+.terms-logo-text {
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.3px;
+  line-height: 1;
+}
+
+.terms-nav-link {
+  color: rgba(255,255,255,0.9);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.terms-nav-link:hover { color: #ffffff; }
+
+/* Content wrapper */
+.terms-content {
+  position: relative;
+  z-index: 1;
+  padding-top: 120px;
+  padding-bottom: 60px;
+  max-width: 56rem;
+  margin: 0 auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+/* Dramatic typography hierarchy */
+.terms-hero-title {
+  font-size: clamp(3rem, 8vw, 5rem);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(135deg, #ffffff 0%, #a8a8a8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.terms-last-updated {
+  font-size: 0.9rem;
+  color: rgba(156, 163, 175, 0.9);
+  font-weight: 400;
+  margin-bottom: 3rem;
+  letter-spacing: 0.02em;
+}
+
+.terms-section {
+  margin-bottom: 3.5rem;
+}
+
+.terms-section-number {
+  display: inline-block;
+  font-size: 4rem;
+  font-weight: 900;
+  color: rgba(99, 102, 241, 0.15);
+  line-height: 1;
+  margin-bottom: -0.5rem;
+  letter-spacing: -0.05em;
+}
+
+.terms-section-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 1.25rem;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+}
+
+.terms-text {
+  color: rgba(209, 213, 219, 0.95);
+  line-height: 1.8;
+  font-size: 1.05rem;
+  margin-bottom: 1rem;
+}
+
+.terms-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 1.5rem 0;
+}
+
+.terms-list li {
+  position: relative;
+  padding-left: 2rem;
+  margin-bottom: 0.75rem;
+  color: rgba(209, 213, 219, 0.95);
+  line-height: 1.7;
+  font-size: 1.05rem;
+}
+
+.terms-list li::before {
+  content: "→";
+  position: absolute;
+  left: 0.5rem;
+  color: rgba(99, 102, 241, 0.7);
+  font-weight: 600;
+}
+
+.terms-link {
+  color: #818cf8;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+  border-bottom: 1px solid rgba(129, 140, 248, 0.3);
+}
+
+.terms-link:hover {
+  color: #a5b4fc;
+  border-bottom-color: rgba(165, 180, 252, 0.5);
+}
+
+.terms-divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent);
+  margin: 3rem 0;
+}

@@ -1,9 +1,10 @@
 .footer {
   width: 100vw;
   background: linear-gradient(180deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
-  border-top: 1px solid rgba(96, 165, 250, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
   padding: 3.5rem 0 1.5rem 0;
   position: relative;
+  box-shadow: 0 -4px 24px rgba(99, 102, 241, 0.15);
 }
 
 .footer::before {
@@ -16,9 +17,10 @@
   background: linear-gradient(
     to right,
     transparent,
-    rgba(96, 165, 250, 0.3),
+    rgba(129, 140, 248, 0.5),
     transparent
   );
+  box-shadow: 0 0 12px rgba(129, 140, 248, 0.4);
 }
 
 .footer-container {
@@ -53,10 +55,8 @@
 }
 
 .footer-logo span {
-  background: linear-gradient(135deg, var(--accent), var(--accent-2));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #ffffff;
+  font-weight: 700;
 }
 
 .footer-logo-img {

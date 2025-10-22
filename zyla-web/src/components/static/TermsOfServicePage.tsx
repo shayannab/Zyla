@@ -1,38 +1,47 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import logo from '../../assests/logo.png';
+import './TermsOfServicePage.css';
 
 const TermsOfServicePage: React.FC = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
-      <nav className="border-b border-gray-800 bg-black/20 backdrop-blur-lg">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center">
-              <span className="text-xl font-bold">Z</span>
-            </div>
-            <span className="text-xl font-bold">Zyla</span>
+    <div className="terms-page">
+      {/* Glass floating navbar */}
+      <nav className="terms-navbar">
+        <div className="terms-navbar-content">
+          <Link to="/" className="terms-logo">
+            <img src={logo} alt="Zyla Logo" className="terms-logo-img" />
+            <span className="terms-logo-text">Zyla</span>
+          </Link>
+          <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
+            <Link to="/" className="terms-nav-link">Home</Link>
+            <Link to="/about" className="terms-nav-link">About</Link>
           </div>
-          <a href="/" className="text-gray-300 hover:text-white">Back to Home</a>
         </div>
       </nav>
 
-      <div className="max-w-4xl mx-auto px-6 py-20">
-        <h1 className="text-5xl font-bold mb-8">Terms of Service</h1>
-        <div className="text-gray-400 mb-6">Last updated: January 2025</div>
+      <div className="terms-content">
+        <h1 className="terms-hero-title">Terms of Service</h1>
+        <div className="terms-last-updated">Last updated: January 2025</div>
 
-        <div className="space-y-8 text-gray-300">
-          <section>
-            <h2 className="text-2xl font-bold text-white mb-4">1. Acceptance of Terms</h2>
-            <p className="leading-relaxed">
+        <div>
+          <section className="terms-section">
+            <div className="terms-section-number">01</div>
+            <h2 className="terms-section-title">Acceptance of Terms</h2>
+            <p className="terms-text">
               By accessing and using Zyla's services, you accept and agree to be bound by the terms and provisions of this agreement. If you do not agree to these terms, please do not use our services.
             </p>
           </section>
 
-          <section>
-            <h2 className="text-2xl font-bold text-white mb-4">2. Use of Services</h2>
-            <p className="leading-relaxed mb-4">
+          <div className="terms-divider"></div>
+
+          <section className="terms-section">
+            <div className="terms-section-number">02</div>
+            <h2 className="terms-section-title">Use of Services</h2>
+            <p className="terms-text">
               Zyla provides AI-powered financial management tools. You agree to:
             </p>
-            <ul className="list-disc list-inside space-y-2 ml-4">
+            <ul className="terms-list">
               <li>Provide accurate and complete information</li>
               <li>Maintain the security of your account</li>
               <li>Use the service in compliance with all applicable laws</li>
@@ -40,46 +49,64 @@ const TermsOfServicePage: React.FC = () => {
             </ul>
           </section>
 
-          <section>
-            <h2 className="text-2xl font-bold text-white mb-4">3. Financial Data</h2>
-            <p className="leading-relaxed">
+          <div className="terms-divider"></div>
+
+          <section className="terms-section">
+            <div className="terms-section-number">03</div>
+            <h2 className="terms-section-title">Financial Data</h2>
+            <p className="terms-text">
               Zyla connects to your bank accounts through Plaid. By using our service, you authorize us to access your financial data for the purpose of providing our services. We do not have access to your bank login credentials.
             </p>
           </section>
 
-          <section>
-            <h2 className="text-2xl font-bold text-white mb-4">4. AI-Generated Insights</h2>
-            <p className="leading-relaxed">
+          <div className="terms-divider"></div>
+
+          <section className="terms-section">
+            <div className="terms-section-number">04</div>
+            <h2 className="terms-section-title">AI-Generated Insights</h2>
+            <p className="terms-text">
               Our AI provides financial insights and recommendations. These are for informational purposes only and should not be considered professional financial advice. You are responsible for your own financial decisions.
             </p>
           </section>
 
-          <section>
-            <h2 className="text-2xl font-bold text-white mb-4">5. Account Termination</h2>
-            <p className="leading-relaxed">
+          <div className="terms-divider"></div>
+
+          <section className="terms-section">
+            <div className="terms-section-number">05</div>
+            <h2 className="terms-section-title">Account Termination</h2>
+            <p className="terms-text">
               You may terminate your account at any time. We reserve the right to suspend or terminate accounts that violate these terms or engage in fraudulent activity.
             </p>
           </section>
 
-          <section>
-            <h2 className="text-2xl font-bold text-white mb-4">6. Limitation of Liability</h2>
-            <p className="leading-relaxed">
+          <div className="terms-divider"></div>
+
+          <section className="terms-section">
+            <div className="terms-section-number">06</div>
+            <h2 className="terms-section-title">Limitation of Liability</h2>
+            <p className="terms-text">
               Zyla is provided "as is" without warranties of any kind. We are not liable for any damages arising from your use of the service, including but not limited to financial losses.
             </p>
           </section>
 
-          <section>
-            <h2 className="text-2xl font-bold text-white mb-4">7. Changes to Terms</h2>
-            <p className="leading-relaxed">
+          <div className="terms-divider"></div>
+
+          <section className="terms-section">
+            <div className="terms-section-number">07</div>
+            <h2 className="terms-section-title">Changes to Terms</h2>
+            <p className="terms-text">
               We may modify these terms at any time. Continued use of the service after changes constitutes acceptance of the new terms.
             </p>
           </section>
 
-          <section>
-            <h2 className="text-2xl font-bold text-white mb-4">8. Contact Information</h2>
-            <p className="leading-relaxed">
+          <div className="terms-divider"></div>
+
+          <section className="terms-section">
+            <div className="terms-section-number">08</div>
+            <h2 className="terms-section-title">Contact Information</h2>
+            <p className="terms-text">
               For questions about these Terms of Service, contact us at:{' '}
-              <a href="mailto:shayannabehera23@gmail.com" className="text-indigo-400 hover:text-indigo-300">
+              <a href="mailto:shayannabehera23@gmail.com" className="terms-link">
                 shayannabehera23@gmail.com
               </a>
             </p>
