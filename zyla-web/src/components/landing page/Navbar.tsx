@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { User } from "lucide-react";
 import "./Navbar.css";
 import logo from "../../assests/logo.png";
 
@@ -12,6 +13,22 @@ const Navbar: React.FC = () => {
     setIsLoggedIn(!!token);
   }, []);
 
+  const handleFeaturesClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const featuresSection = document.getElementById('features');
+    if (featuresSection) {
+      featuresSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
+  const handlePricingClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const pricingSection = document.getElementById('pricing');
+    if (pricingSection) {
+      pricingSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   return (
     <nav className="navbar-glass">
       <div className="navbar-logo">
@@ -20,8 +37,13 @@ const Navbar: React.FC = () => {
       </div>
       <ul className="navbar-links">
         <li>
-          <a href="#features">
+          <a href="#features" onClick={handleFeaturesClick} style={{ cursor: 'pointer' }}>
             Features
+          </a>
+        </li>
+        <li>
+          <a href="#pricing" onClick={handlePricingClick} style={{ cursor: 'pointer' }}>
+            Pricing
           </a>
         </li>
         <li>
@@ -29,7 +51,13 @@ const Navbar: React.FC = () => {
             Dashboard
           </Link>
         </li>
-        {!isLoggedIn && (
+        {isLoggedIn ? (
+          <li>
+            <Link to="/accounts" className="account-icon-link">
+              <User size={20} color="white" />
+            </Link>
+          </li>
+        ) : (
           <li>
             <Link to="/auth" className="navbar-btn">
               Log In

@@ -85,7 +85,7 @@ const Pricing: React.FC = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="pricing-section">
+    <section id="pricing" ref={sectionRef} className="pricing-section">
       <div className="pricing-label">PRICING</div>
       <h2 className="pricing-title">
         Simple, Transparent<br />Pricing for Everyone

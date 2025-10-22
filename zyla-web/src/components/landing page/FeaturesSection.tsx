@@ -67,7 +67,7 @@ const FeaturesSection: React.FC = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="features-section">
+    <section id="features" ref={sectionRef} className="features-section">
       <div className="features-label">FEATURES</div>
       <h2 className="features-title">
         Powerful Features,<br />Built for Fintech
