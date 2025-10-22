@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Download, ChevronLeft, ChevronRight } from 'lucide-react';
+import { isDemoUser } from '../../utils/demoMode';
 
 // Mock data - replace with actual API
 const mockTransactions = [
@@ -40,7 +42,7 @@ const getCategoryColor = (category: string) => {
 
 const TransactionsPage: React.FC = () => {
   const navigate = useNavigate();
-  const [transactions, setTransactions] = useState(mockTransactions);
+  const [transactions, setTransactions] = useState(isDemoUser() ? mockTransactions : []);
   const [searchQuery, setSearchQuery] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('all');
   const [typeFilter, setTypeFilter] = useState('all');
@@ -72,7 +74,7 @@ const TransactionsPage: React.FC = () => {
     .reduce((sum, t) => sum + t.amount, 0);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 p-8">
+  <div className="min-h-screen bg-gradient-to-br from-[#0a1628] via-[#020617] to-[#0a1628] p-8">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
@@ -84,12 +86,13 @@ const TransactionsPage: React.FC = () => {
             <div className="flex items-center gap-3">
               <button
                 onClick={() => navigate('/dashboard')}
-                className="bg-gray-700 hover:bg-gray-600 text-white px-4 py-3 rounded-xl font-medium transition-colors flex items-center gap-2"
+                className="inline-flex items-center gap-2 text-indigo-300 hover:text-white hover:underline underline-offset-4 px-0 py-0 bg-transparent border-0"
               >
-                ← Back to Dashboard
+                <ChevronLeft size={18} />
+                Back to Dashboard
               </button>
-              <button className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-xl font-semibold transition-colors flex items-center gap-2">
-                <span>⬇️</span>
+              <button className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white px-6 py-3 rounded-xl font-semibold backdrop-blur hover:bg-white/20 hover:shadow-white/20 transition">
+                <Download size={18} />
                 Export CSV
               </button>
             </div>
@@ -97,15 +100,15 @@ const TransactionsPage: React.FC = () => {
 
           {/* Stats Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-            <div className="bg-gray-800/50 border border-gray-700 rounded-2xl p-6">
+            <div className="bg-white/5 border border-white/20 backdrop-blur-xl rounded-2xl p-6 shadow-lg shadow-white/10 hover:shadow-white/20 transition">
               <p className="text-gray-400 text-sm mb-1">Total Transactions</p>
               <p className="text-3xl font-bold text-white">{transactions.length}</p>
             </div>
-            <div className="bg-gray-800/50 border border-gray-700 rounded-2xl p-6">
+            <div className="bg-white/5 border border-white/20 backdrop-blur-xl rounded-2xl p-6 shadow-lg shadow-white/10 hover:shadow-white/20 transition">
               <p className="text-gray-400 text-sm mb-1">Total Spent</p>
               <p className="text-3xl font-bold text-red-400">{formatCurrency(totalSpent)}</p>
             </div>
-            <div className="bg-gray-800/50 border border-gray-700 rounded-2xl p-6">
+            <div className="bg-white/5 border border-white/20 backdrop-blur-xl rounded-2xl p-6 shadow-lg shadow-white/10 hover:shadow-white/20 transition">
               <p className="text-gray-400 text-sm mb-1">Total Income</p>
               <p className="text-3xl font-bold text-green-400">{formatCurrency(totalIncome)}</p>
             </div>
@@ -257,12 +260,14 @@ const TransactionsPage: React.FC = () => {
 
         {/* Pagination */}
         <div className="flex items-center justify-between mt-6">
-          <button className="px-4 py-2 bg-gray-800 border border-gray-700 rounded-xl text-white hover:bg-gray-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
-            ← Previous
+          <button className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/20 rounded-xl text-white hover:bg-white/10 backdrop-blur transition disabled:opacity-50 disabled:cursor-not-allowed">
+            <ChevronLeft size={16} />
+            Previous
           </button>
           <span className="text-gray-400 text-sm">Page 1 of 1</span>
-          <button className="px-4 py-2 bg-gray-800 border border-gray-700 rounded-xl text-white hover:bg-gray-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
-            Next →
+          <button className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/20 rounded-xl text-white hover:bg-white/10 backdrop-blur transition disabled:opacity-50 disabled:cursor-not-allowed">
+            Next
+            <ChevronRight size={16} />
           </button>
         </div>
       </div>

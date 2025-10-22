@@ -13,10 +13,14 @@ import {
   Settings, 
   LogOut,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  ArrowDownRight,
+  ArrowUpRight
 } from 'lucide-react';
 import logo from '../../assests/logo.png';
 import './ZylaDashboard.css';
+import { isDemoUser } from '../../utils/demoMode';
+import { PieChart as RePieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 
 // Utility functions
 const formatCurrency = (amount: number) => {
@@ -110,7 +114,7 @@ const PlaidLinkButton: React.FC<{ onSuccess?: () => void }> = ({ onSuccess }) =>
     <button
       onClick={openPlaidLink}
       disabled={loading}
-      className="btn-animated w-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white py-3 px-6 rounded-xl font-semibold hover:shadow-lg hover:shadow-indigo-500/50 smooth-transition disabled:opacity-50 flex items-center justify-center gap-2"
+      className="w-full bg-white/10 border border-white/20 text-white py-3 px-6 rounded-xl font-semibold backdrop-blur hover:bg-white/20 hover:shadow-white/20 smooth-transition disabled:opacity-50 flex items-center justify-center gap-2"
     >
       {loading ? (
         <span className="flex items-center gap-2">
@@ -222,8 +226,40 @@ const ZylaDashboard: React.FC = () => {
     try {
       setLoading(true);
       const token = localStorage.getItem('zyla_token');
+      const demo = isDemoUser();
 
-      // Fetch dashboard data
+      // If demo user, seed fake data and return
+      if (demo) {
+        setDashboardData({
+          user: { id: 'demo', name: 'Demo User', email: 'demo@zyla.com', hasPlaidConnection: false },
+          financial_summary: {
+            total_balance: 24890.0,
+            monthly_spending: 3420.5,
+            monthly_income: 5200.0,
+            net_cash_flow: 1779.5,
+            accounts_count: 3
+          },
+          accounts: [
+            { id: 'a1', name: 'Chase Checking', type: 'depository', subtype: 'checking', balances: { current: 12450.5 }, institution_name: 'Chase' },
+            { id: 'a2', name: 'Savings Account', type: 'depository', subtype: 'savings', balances: { current: 9800 }, institution_name: 'Chase' },
+            { id: 'a3', name: 'Credit Card', type: 'credit', subtype: 'credit card', balances: { current: -842.3 }, institution_name: 'Amex' }
+          ],
+          recent_transactions: [
+            { id: 't1', description: 'Netflix Subscription', amount: -15.99, date: '2025-01-03', aiCategory: 'Entertainment', type: 'debit' },
+            { id: 't2', description: 'Salary Deposit', amount: 3500.00, date: '2025-01-01', aiCategory: 'Income', type: 'credit' },
+            { id: 't3', description: 'Grocery Store', amount: -87.45, date: '2024-12-30', aiCategory: 'Groceries', type: 'debit' }
+          ],
+          spending_by_category: [
+            { category: 'Groceries', amount: 620 },
+            { category: 'Transport', amount: 180 },
+            { category: 'Entertainment', amount: 140 },
+            { category: 'Bills', amount: 980 }
+          ]
+        });
+        return;
+      }
+
+      // Fetch dashboard data for non-demo users
       const dashResponse = await fetch(`${API_BASE}/api/user/dashboard`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -237,14 +273,16 @@ const ZylaDashboard: React.FC = () => {
         const data = await dashResponse.json();
         setDashboardData(data);
       } else {
-        // Mock data for demo
+        // Non-demo fallback: empty dashboard
+        const userStr = localStorage.getItem('zyla_user');
+        const user = userStr ? JSON.parse(userStr) : { id: 'unknown', name: 'User', email: '' };
         setDashboardData({
-          user: { id: '1', name: 'Demo User', email: 'demo@zyla.com', hasPlaidConnection: false },
+          user: { id: user.id || 'unknown', name: user.name || 'User', email: user.email || '', hasPlaidConnection: false },
           financial_summary: {
-            total_balance: 24890.0,
-            monthly_spending: 3420.5,
-            monthly_income: 5200.0,
-            net_cash_flow: 1779.5,
+            total_balance: 0,
+            monthly_spending: 0,
+            monthly_income: 0,
+            net_cash_flow: 0,
             accounts_count: 0
           },
           accounts: [],
@@ -264,23 +302,34 @@ const ZylaDashboard: React.FC = () => {
       }
     } catch (error) {
       console.error('Failed to load dashboard:', error);
-      // Set demo data on error
-      setDashboardData({
-        user: { id: '1', name: 'Demo User', email: 'demo@zyla.com', hasPlaidConnection: false },
-        financial_summary: {
-          total_balance: 24890.0,
-          monthly_spending: 3420.5,
-          monthly_income: 5200.0,
-          net_cash_flow: 1779.5,
-          accounts_count: 0
-        },
-        accounts: [],
-        recent_transactions: [],
-        spending_by_category: []
-      });
-      setInsights([
-        { id: '1', title: 'Connect Bank', message: 'Link your bank to get personalized insights', priority: 'high' }
-      ]);
+      const demo = isDemoUser();
+      if (demo) {
+        setDashboardData({
+          user: { id: 'demo', name: 'Demo User', email: 'demo@zyla.com', hasPlaidConnection: false },
+          financial_summary: {
+            total_balance: 24890.0,
+            monthly_spending: 3420.5,
+            monthly_income: 5200.0,
+            net_cash_flow: 1779.5,
+            accounts_count: 3
+          },
+          accounts: [],
+          recent_transactions: [],
+          spending_by_category: []
+        });
+        setInsights([
+          { id: '1', title: 'Connect Bank', message: 'Link your bank to get personalized insights', priority: 'high' }
+        ]);
+      } else {
+        const userStr = localStorage.getItem('zyla_user');
+        const user = userStr ? JSON.parse(userStr) : { id: 'unknown', name: 'User', email: '' };
+        setDashboardData({
+          user: { id: user.id || 'unknown', name: user.name || 'User', email: user.email || '', hasPlaidConnection: false },
+          financial_summary: { total_balance: 0, monthly_spending: 0, monthly_income: 0, net_cash_flow: 0, accounts_count: 0 },
+          accounts: [], recent_transactions: [], spending_by_category: []
+        });
+        setInsights([]);
+      }
     } finally {
       setLoading(false);
     }
@@ -304,6 +353,8 @@ const ZylaDashboard: React.FC = () => {
   const accounts = dashboardData?.accounts || [];
   const recentTransactions = dashboardData?.recent_transactions || [];
   const spendingByCategory = dashboardData?.spending_by_category || [];
+  const CATEGORY_COLORS = ["#6366f1","#8b5cf6","#ec4899","#10b981","#f59e0b","#06b6d4"];
+  const totalSpending = (spendingByCategory || []).reduce((sum: number, c: any) => sum + (c?.amount || 0), 0);
 
   const navItems = [
     { name: 'Home', icon: <Home size={20} color="white" />, path: '/' },
@@ -318,20 +369,50 @@ const ZylaDashboard: React.FC = () => {
       ? location.pathname === '/'
       : location.pathname.startsWith(item.path)
   }));
+  const topNav = navItems.filter(n => ['Home','Dashboard','Insights','Transactions','Accounts','Budgets'].includes(n.name));
+
+  // IntersectionObserver to reveal stagger items on scroll
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const el = entry.target as HTMLElement;
+        if (entry.isIntersecting) {
+          el.classList.add('in-view');
+        } else {
+          // optional: remove for repeat animations
+          el.classList.remove('in-view');
+        }
+      });
+    }, { threshold: 0.15 });
+
+    const items = document.querySelectorAll('.stagger-item');
+    items.forEach(i => observer.observe(i));
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [location.pathname, loading]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0a1628] via-[#020617] to-[#0a1628] flex flex-col">
       {/* Top Navbar */}
       <nav className="flex items-center justify-between px-8 py-4 bg-transparent backdrop-blur-xl z-50">
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 cursor-pointer" onClick={() => navigate('/') }>
           <img src={logo} alt="Zyla" className="w-10 h-10 object-contain rounded-xl shadow-lg" />
           <span className="text-2xl font-bold text-white tracking-wide">Zyla</span>
         </div>
         <div className="flex items-center gap-2 bg-[#10182a] rounded-full px-2 py-1 shadow-md">
-          <button className="px-4 py-2 rounded-full text-white font-medium hover:bg-indigo-600/20 transition">Dashboard</button>
-          <button className="px-4 py-2 rounded-full text-white font-medium hover:bg-indigo-600/20 transition">Statistics</button>
-          <button className="px-4 py-2 rounded-full text-white font-medium hover:bg-indigo-600/20 transition">Transactions</button>
-          <button className="px-4 py-2 rounded-full text-white font-medium hover:bg-indigo-600/20 transition">My wallet</button>
+          {topNav.map(item => (
+            <button
+              key={item.name}
+              onClick={() => navigate(item.path)}
+              className={`px-4 py-2 rounded-full text-white font-medium transition ${
+                item.active ? 'bg-white/10 shadow-inner' : 'hover:bg-indigo-600/20'
+              }`}
+            >
+              {item.name}
+            </button>
+          ))}
         </div>
         <div className="flex items-center gap-4">
           <button className="p-2 rounded-full hover:bg-white/10 transition"><Settings size={20} color="white" /></button>
@@ -355,7 +436,7 @@ const ZylaDashboard: React.FC = () => {
 
           {/* No Bank Connection Banner */}
           {!loading && !hasPlaidConnection && (
-            <div className="mb-8 p-6 rounded-2xl bg-gradient-to-r from-indigo-900/50 to-purple-900/50 shadow-lg shadow-indigo-500/20">
+            <div className="mb-8 p-6 rounded-2xl bg-white/5 border border-white/20 backdrop-blur-xl shadow-lg shadow-white/10 hover:shadow-white/20 transition">
               <div className="flex flex-col md:flex-row items-center justify-between gap-4">
                 <div className="flex-1">
                   <h3 className="text-xl font-bold text-white mb-2">Connect Your Bank Account</h3>
@@ -497,7 +578,11 @@ const ZylaDashboard: React.FC = () => {
                         <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
                           transaction.type === 'credit' ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'
                         }`}>
-                          {transaction.type === 'credit' ? '↓' : '↑'}
+                          {transaction.type === 'credit' ? (
+                            <ArrowDownRight size={18} />
+                          ) : (
+                            <ArrowUpRight size={18} />
+                          )}
                         </div>
                         <div>
                           <p className="font-medium text-white">{transaction.description}</p>
@@ -535,20 +620,28 @@ const ZylaDashboard: React.FC = () => {
               </div>
             ) : spendingByCategory.length > 0 ? (
               <div className="space-y-4">
-                {spendingByCategory.slice(0, 5).map((cat: any, index: number) => (
-                  <div key={index} className="stagger-item" style={{ animationDelay: `${0.05 * index}s` }}>
-                    <div className="flex justify-between mb-2">
-                      <span className="text-sm text-gray-300">{cat.category}</span>
-                      <span className="text-sm font-semibold text-white count-up">{formatCurrency(cat.amount)}</span>
+                {spendingByCategory.slice(0, 5).map((cat: any, index: number) => {
+                  const denom = Math.max(spendingByCategory[0]?.amount || 0, 1);
+                  const widthPct = Math.min((cat.amount / denom) * 100, 100);
+                  const color = CATEGORY_COLORS[index % CATEGORY_COLORS.length];
+                  return (
+                    <div key={index} className="stagger-item" style={{ animationDelay: `${0.05 * index}s` }}>
+                      <div className="flex justify-between mb-2">
+                        <div className="flex items-center gap-2">
+                          <span className="w-3 h-3 rounded-full" style={{ backgroundColor: color }} />
+                          <span className="text-sm text-gray-300">{cat.category}</span>
+                        </div>
+                        <span className="text-sm font-semibold text-white count-up">{formatCurrency(cat.amount)}</span>
+                      </div>
+                      <div className="w-full bg-gray-700/60 rounded-full h-2 overflow-hidden">
+                        <div
+                          className="h-2 rounded-full smooth-transition"
+                          style={{ width: `${widthPct}%`, backgroundColor: color }}
+                        ></div>
+                      </div>
                     </div>
-                    <div className="w-full bg-gray-700 rounded-full h-2 overflow-hidden">
-                      <div
-                        className="category-bar bg-gradient-to-r from-indigo-500 to-purple-600 h-2 rounded-full smooth-transition"
-                        style={{ width: `${(cat.amount / spendingByCategory[0].amount) * 100}%` }}
-                      ></div>
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             ) : (
               <div className="text-center py-8">
@@ -582,6 +675,61 @@ const ZylaDashboard: React.FC = () => {
               <div className="text-center py-8">
                 <p className="text-gray-400 text-sm">No insights yet</p>
                 <p className="text-xs text-gray-500 mt-2">Connect your bank to get personalized insights</p>
+              </div>
+            )}
+          </div>
+          {/* Spending Breakdown (Donut) */}
+          <div className="glass-card rounded-2xl p-6 backdrop-blur-sm">
+            <h2 className="section-header text-xl font-bold text-white mb-6">Spending Breakdown</h2>
+            {loading ? (
+              <div className="space-y-3">
+                <div className="h-[220px] w-full bg-transparent border border-white/20 rounded-xl" />
+              </div>
+            ) : spendingByCategory.length > 0 ? (
+              <div className="flex flex-col items-center">
+                <div className="relative w-full h-56">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <RePieChart>
+                      <Pie
+                        data={spendingByCategory.map((c:any) => ({ name: c.category, value: c.amount }))}
+                        cx="50%"
+                        cy="50%"
+                        innerRadius={55}
+                        outerRadius={85}
+                        paddingAngle={3}
+                        dataKey="value"
+                      >
+                        {spendingByCategory.map((entry:any, index:number) => (
+                          <Cell key={`cell-${index}`} fill={CATEGORY_COLORS[index % CATEGORY_COLORS.length]} />
+                        ))}
+                      </Pie>
+                      <Tooltip contentStyle={{ backgroundColor: '#0b1222', border: 'none', borderRadius: 12, color: '#fff' }} />
+                    </RePieChart>
+                  </ResponsiveContainer>
+                  {/* Center total label */}
+                  <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+                    <div className="text-center">
+                      <div className="text-[11px] uppercase tracking-wide text-gray-400">Total</div>
+                      <div className="text-lg font-semibold text-white">${totalSpending.toLocaleString()}</div>
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-4 w-full space-y-2">
+                  {spendingByCategory.slice(0,6).map((cat:any, idx:number) => (
+                    <div key={cat.category + idx} className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <span className="w-3 h-3 rounded-full" style={{ backgroundColor: CATEGORY_COLORS[idx % CATEGORY_COLORS.length] }} />
+                        <span className="text-sm text-gray-300">{cat.category}</span>
+                      </div>
+                      <span className="text-sm font-semibold text-white">${cat.amount.toLocaleString()}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <div className="text-center py-8">
+                <p className="text-gray-400 text-sm">No spending data yet</p>
+                <p className="text-xs text-gray-500 mt-2">Connect your bank to view breakdown</p>
               </div>
             )}
           </div>

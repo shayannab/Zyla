@@ -1,18 +1,26 @@
 import React, { useState } from 'react';
 import OverviewCards from './OverviewCards';
-import RevenueChart from './RevenueChart';
-import { LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import {
+  Sun,
+  Moon,
+  Bell,
+  ArrowDownRight,
+  ArrowUpRight,
+  ArrowRight,
+  Building2,
+  Pencil,
+  PieChart as PieChartIcon,
+  CreditCard,
+  Target,
+  TrendingUp,
+  Settings,
+  AlertTriangle,
+  Info,
+  CheckCircle2,
+} from 'lucide-react';
 
 // Types
-interface StatCard {
-  id: number;
-  label: string;
-  value: string;
-  change: string;
-  icon: string;
-  trend: 'up' | 'down';
-}
-
 interface Transaction {
   id: number;
   name: string;
@@ -38,22 +46,15 @@ interface Notification {
   id: number;
   type: 'warning' | 'info' | 'success';
   message: string;
-  icon: string;
 }
 
 interface NavItem {
   name: string;
-  icon: string;
+  icon: React.ElementType;
   active: boolean;
 }
 
 // Mock Data
-const overviewData: StatCard[] = [
-  { id: 1, label: 'Net Worth', value: '$54,812', change: '+2.5%', icon: '💰', trend: 'up' },
-  { id: 2, label: 'Total Balance', value: '$36,254', change: '-0.8%', icon: '💳', trend: 'down' },
-  { id: 3, label: 'Monthly Budget', value: '$26,348', change: '+1.2%', icon: '📊', trend: 'up' },
-  { id: 4, label: 'Investments', value: '$18,420', change: '+5.3%', icon: '📈', trend: 'up' }
-];
 
 const spendingData: SpendingData[] = [
   { month: 'Jan', amount: 2400 },
@@ -78,31 +79,12 @@ const recentTransactions: Transaction[] = [
 ];
 
 const notifications: Notification[] = [
-  { id: 1, type: 'warning', message: 'Overspending on groceries this month', icon: '⚠️' },
-  { id: 2, type: 'info', message: 'New subscription detected: Spotify Premium', icon: 'ℹ️' },
-  { id: 3, type: 'success', message: 'Budget goal achieved! Great job!', icon: '✅' }
+  { id: 1, type: 'warning', message: 'Overspending on groceries this month' },
+  { id: 2, type: 'info', message: 'New subscription detected: Spotify Premium' },
+  { id: 3, type: 'success', message: 'Budget goal achieved! Great job!' }
 ];
 
 // Subcomponents
-const StatCardComponent: React.FC<{ item: StatCard; isDarkMode: boolean }> = ({ item, isDarkMode }) => (
-  <div className={`${
-    isDarkMode ? 'bg-gray-800/50 border-gray-700' : 'bg-white border-gray-200'
-  } border rounded-2xl p-6 hover:scale-105 transition-all duration-300 backdrop-blur-sm hover:shadow-xl`}>
-    <div className="flex items-center justify-between mb-4">
-      <span className="text-3xl">{item.icon}</span>
-      <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${
-        item.trend === 'up' 
-          ? 'bg-green-500/20 text-green-400' 
-          : 'bg-red-500/20 text-red-400'
-      }`}>
-        {item.change}
-      </span>
-    </div>
-    <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} mb-1`}>{item.label}</p>
-    <p className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{item.value}</p>
-  </div>
-);
-
 // Update the TransactionItem component
 const TransactionItem: React.FC<{ transaction: Transaction; isDarkMode: boolean }> = ({ transaction, isDarkMode }) => (
   <div className={`flex items-center justify-between p-4 rounded-xl ${
@@ -112,7 +94,11 @@ const TransactionItem: React.FC<{ transaction: Transaction; isDarkMode: boolean 
       <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
         transaction.amount > 0 ? 'bg-green-500/20' : 'bg-indigo-500/20'
       }`}>
-        {transaction.amount > 0 ? '↓' : '↑'}
+        {transaction.amount > 0 ? (
+          <ArrowDownRight className="w-5 h-5 text-white" />
+        ) : (
+          <ArrowUpRight className="w-5 h-5 text-white" />
+        )}
       </div>
       <div>
         <p className={`font-medium ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{transaction.name}</p>
@@ -138,7 +124,11 @@ const NotificationItem: React.FC<{ notification: Notification; isDarkMode: boole
       : 'bg-blue-500/10 border border-blue-500/30'
   } transition-all duration-200`}>
     <div className="flex items-start gap-3">
-      <span className="text-xl">{notification.icon}</span>
+      <span className="text-xl">
+        {notification.type === 'warning' && <AlertTriangle className="w-5 h-5 text-white" />}
+        {notification.type === 'info' && <Info className="w-5 h-5 text-white" />}
+        {notification.type === 'success' && <CheckCircle2 className="w-5 h-5 text-white" />}
+      </span>
       <p className={`text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>{notification.message}</p>
     </div>
   </div>
@@ -151,12 +141,12 @@ const FinanceDashboard: React.FC = () => {
   const [currency, setCurrency] = useState<string>('USD');
 
   const navItems: NavItem[] = [
-    { name: 'Dashboard', icon: '📊', active: true },
-    { name: 'Transactions', icon: '💸', active: false },
-    { name: 'Budgets', icon: '🎯', active: false },
-    { name: 'Accounts', icon: '🏦', active: false },
-    { name: 'Insights', icon: '📈', active: false },
-    { name: 'Settings', icon: '⚙️', active: false }
+    { name: 'Dashboard', icon: PieChartIcon, active: true },
+    { name: 'Transactions', icon: CreditCard, active: false },
+    { name: 'Budgets', icon: Target, active: false },
+    { name: 'Accounts', icon: Building2, active: false },
+    { name: 'Insights', icon: TrendingUp, active: false },
+    { name: 'Settings', icon: Settings, active: false }
   ];
 
   return (
@@ -196,19 +186,22 @@ const FinanceDashboard: React.FC = () => {
 
           {/* Navigation */}
           <nav className="space-y-2">
-            {navItems.map((item) => (
-              <button
-                key={item.name}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
-                  item.active
-                    ? 'bg-indigo-500 text-white shadow-lg shadow-indigo-500/50'
-                    : `${isDarkMode ? 'text-gray-400 hover:bg-gray-800/50' : 'text-gray-600 hover:bg-gray-100'}`
-                }`}
-              >
-                <span className="text-xl">{item.icon}</span>
-                {sidebarOpen && <span className="font-medium">{item.name}</span>}
-              </button>
-            ))}
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              return (
+                <button
+                  key={item.name}
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
+                    item.active
+                      ? 'bg-indigo-500 text-white shadow-lg shadow-indigo-500/50'
+                      : `${isDarkMode ? 'text-gray-400 hover:bg-gray-800/50' : 'text-gray-600 hover:bg-gray-100'}`
+                  }`}
+                >
+                  <Icon className="w-5 h-5 text-white" />
+                  {sidebarOpen && <span className="font-medium">{item.name}</span>}
+                </button>
+              );
+            })}
           </nav>
         </div>
       </aside>
@@ -244,7 +237,11 @@ const FinanceDashboard: React.FC = () => {
                 isDarkMode ? 'bg-gray-800 text-yellow-400' : 'bg-gray-200 text-gray-700'
               } hover:scale-110 transition-all duration-200`}
             >
-              {isDarkMode ? '☀️' : '🌙'}
+              {isDarkMode ? (
+                <Sun className="w-5 h-5 text-white" />
+              ) : (
+                <Moon className="w-5 h-5 text-white" />
+              )}
             </button>
 
             {/* Notification Bell */}
@@ -252,7 +249,7 @@ const FinanceDashboard: React.FC = () => {
               isDarkMode ? 'bg-gray-800' : 'bg-gray-200'
             } hover:scale-110 transition-all duration-200 relative`}>
               <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-              🔔
+              <Bell className="w-5 h-5 text-white" />
             </button>
           </div>
         </div>
@@ -366,7 +363,10 @@ const FinanceDashboard: React.FC = () => {
           } border rounded-2xl p-6 backdrop-blur-sm`}>
             <div className="flex items-center justify-between mb-6">
               <h2 className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Transaction History</h2>
-              <button className="text-indigo-500 text-sm font-medium hover:text-indigo-400 transition-colors">View All →</button>
+              <button className="text-indigo-500 text-sm font-medium hover:text-indigo-400 transition-colors inline-flex items-center gap-1">
+                <span>View All</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
             </div>
             <div className="space-y-3">
               {recentTransactions.map((transaction) => (
@@ -401,12 +401,18 @@ const FinanceDashboard: React.FC = () => {
                 <button className={`w-full ${
                   isDarkMode ? 'bg-gray-700 text-white' : 'bg-gray-100 text-gray-900'
                 } py-3 rounded-xl font-medium hover:scale-105 transition-all duration-200`}>
-                  🏦 Connect Bank
+                  <span className="inline-flex items-center gap-2">
+                    <Building2 className="w-5 h-5 text-white" />
+                    <span>Connect Bank</span>
+                  </span>
                 </button>
                 <button className={`w-full ${
                   isDarkMode ? 'bg-gray-700 text-white' : 'bg-gray-100 text-gray-900'
                 } py-3 rounded-xl font-medium hover:scale-105 transition-all duration-200`}>
-                  ✏️ Edit Budget
+                  <span className="inline-flex items-center gap-2">
+                    <Pencil className="w-5 h-5 text-white" />
+                    <span>Edit Budget</span>
+                  </span>
                 </button>
               </div>
             </div>

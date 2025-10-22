@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { AlertTriangle, TrendingUp, Lightbulb, Bell, Brain, ChevronLeft } from 'lucide-react';
+import { isDemoUser } from '../../utils/demoMode';
 
 interface Insight {
   id: string;
@@ -17,16 +19,21 @@ const InsightsPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Mock data - replace with API call
+    // Demo-only mock data
+    const demo = isDemoUser();
     setTimeout(() => {
-      setInsights([
-        { id: '1', type: 'overspending', title: 'Overspending Alert', message: 'You spent 23% more on dining this month compared to your average.', priority: 'high', confidenceScore: 92, createdAt: '2025-01-20' },
-        { id: '2', type: 'trend', title: 'Positive Trend', message: 'Your savings rate increased by 15% this month. Great job!', priority: 'medium', confidenceScore: 88, createdAt: '2025-01-19' },
-        { id: '3', type: 'recommendation', title: 'Subscription Alert', message: 'You have 3 streaming subscriptions. Consider consolidating to save $25/month.', priority: 'medium', confidenceScore: 85, createdAt: '2025-01-18' },
-        { id: '4', type: 'alert', title: 'Unusual Activity', message: 'Detected unusual spending pattern in the shopping category.', priority: 'high', confidenceScore: 78, createdAt: '2025-01-17' }
-      ]);
+      if (demo) {
+        setInsights([
+          { id: '1', type: 'overspending', title: 'Overspending Alert', message: 'You spent 23% more on dining this month compared to your average.', priority: 'high', confidenceScore: 92, createdAt: '2025-01-20' },
+          { id: '2', type: 'trend', title: 'Positive Trend', message: 'Your savings rate increased by 15% this month. Great job!', priority: 'medium', confidenceScore: 88, createdAt: '2025-01-19' },
+          { id: '3', type: 'recommendation', title: 'Subscription Alert', message: 'You have 3 streaming subscriptions. Consider consolidating to save $25/month.', priority: 'medium', confidenceScore: 85, createdAt: '2025-01-18' },
+          { id: '4', type: 'alert', title: 'Unusual Activity', message: 'Detected unusual spending pattern in the shopping category.', priority: 'high', confidenceScore: 78, createdAt: '2025-01-17' }
+        ]);
+      } else {
+        setInsights([]);
+      }
       setLoading(false);
-    }, 1000);
+    }, 600);
   }, []);
 
   const getPriorityColor = (priority: string) => {
@@ -36,14 +43,14 @@ const InsightsPage: React.FC = () => {
   };
 
   const getTypeIcon = (type: string) => {
-    if (type === 'overspending') return '⚠️';
-    if (type === 'trend') return '📈';
-    if (type === 'recommendation') return '💡';
-    return '🔔';
+    if (type === 'overspending') return <AlertTriangle size={28} color="white" />;
+    if (type === 'trend') return <TrendingUp size={28} color="white" />;
+    if (type === 'recommendation') return <Lightbulb size={28} color="white" />;
+    return <Bell size={28} color="white" />;
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 p-8">
+  <div className="min-h-screen bg-gradient-to-br from-[#0a1628] via-[#020617] to-[#0a1628] p-8">
       <div className="max-w-7xl mx-auto">
         <div className="mb-8">
           <div className="flex items-center justify-between">
@@ -53,9 +60,10 @@ const InsightsPage: React.FC = () => {
             </div>
             <button
               onClick={() => navigate('/dashboard')}
-              className="bg-gray-700 hover:bg-gray-600 text-white px-4 py-3 rounded-xl font-medium transition-colors"
+              className="inline-flex items-center gap-2 text-indigo-300 hover:text-white hover:underline underline-offset-4 px-0 py-0 bg-transparent border-0"
             >
-              ← Back to Dashboard
+              <ChevronLeft size={18} />
+              Back to Dashboard
             </button>
           </div>
         </div>
@@ -94,7 +102,7 @@ const InsightsPage: React.FC = () => {
               >
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex items-start gap-4">
-                    <div className="text-4xl">{getTypeIcon(insight.type)}</div>
+                    <div className="text-4xl text-white">{getTypeIcon(insight.type)}</div>
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-2">
                         <h3 className="text-xl font-semibold text-white">{insight.title}</h3>
@@ -126,8 +134,8 @@ const InsightsPage: React.FC = () => {
         {/* Empty State */}
         {!loading && insights.length === 0 && (
           <div className="text-center py-20">
-            <div className="w-20 h-20 bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
-              <span className="text-4xl">🧠</span>
+            <div className="w-20 h-20 bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4 text-white">
+              <Brain size={36} />
             </div>
             <h3 className="text-xl font-semibold text-white mb-2">No Insights Yet</h3>
             <p className="text-gray-400 mb-6">Connect your bank account to get AI-powered insights</p>

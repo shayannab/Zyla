@@ -1,19 +1,20 @@
 import React from 'react';
+import { Wallet, CreditCard, BarChart3, TrendingUp, ArrowUpRight, ArrowDownRight } from 'lucide-react';
 
 interface OverviewCard {
   id: number;
   label: string;
   value: string;
   change: string;
-  icon: string;
+  icon: React.ReactNode;
   trend: 'up' | 'down';
 }
 
 const overviewData: OverviewCard[] = [
-  { id: 1, label: 'Net Worth', value: '$54,812', change: '+2.5%', icon: '💰', trend: 'up' },
-  { id: 2, label: 'Total Balance', value: '$36,254', change: '-0.8%', icon: '💳', trend: 'down' },
-  { id: 3, label: 'Monthly Budget', value: '$26,348', change: '+1.2%', icon: '📊', trend: 'up' },
-  { id: 4, label: 'Investments', value: '$18,420', change: '+5.3%', icon: '📈', trend: 'up' }
+  { id: 1, label: 'Net Worth', value: '$54,812', change: '+2.5%', icon: <Wallet size={22} color="white" />, trend: 'up' },
+  { id: 2, label: 'Total Balance', value: '$36,254', change: '-0.8%', icon: <CreditCard size={22} color="white" />, trend: 'down' },
+  { id: 3, label: 'Monthly Budget', value: '$26,348', change: '+1.2%', icon: <BarChart3 size={22} color="white" />, trend: 'up' },
+  { id: 4, label: 'Investments', value: '$18,420', change: '+5.3%', icon: <TrendingUp size={22} color="white" />, trend: 'up' }
 ];
 
 const OverviewCards: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
@@ -37,11 +38,11 @@ const OverviewCards: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
             </div>
             
             {/* Trend Badge */}
-            <div className={`flex items-center px-2.5 py-1 rounded-full text-xs font-semibold
+            <div className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold
               ${card.trend === 'up' 
                 ? 'bg-green-500/10 text-green-400' 
                 : 'bg-red-500/10 text-red-400'}`}>
-              {card.trend === 'up' ? '↑' : '↓'} {card.change}
+              {card.trend === 'up' ? <ArrowUpRight size={14} /> : <ArrowDownRight size={14} />} {card.change}
             </div>
           </div>
 

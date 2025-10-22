@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Building2, Rocket, CheckCircle2, AlertTriangle, Check } from 'lucide-react';
 
 // Types
 type PlaidOnSuccess = (data: { accounts: number; institution?: { name?: string } }) => void;
@@ -176,7 +177,7 @@ const PlaidLinkIntegration: React.FC<{ onSuccess?: PlaidOnSuccess; onExit?: Plai
           </>
         ) : (
           <>
-            <span>🏦</span>
+            <Building2 size={18} />
             Connect Bank Account
           </>
         )}
@@ -193,10 +194,10 @@ const PlaidLinkIntegration: React.FC<{ onSuccess?: PlaidOnSuccess; onExit?: Plai
 const PlaidIntegrationGuide: React.FC = () => {
   return (
     <div className="bg-gray-800 border border-gray-700 rounded-2xl p-6 mt-8">
-      <h3 className="text-xl font-bold text-white mb-4">🚀 Setup Instructions</h3>
+      <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2"><Rocket size={18} /> Setup Instructions</h3>
       <div className="space-y-4 text-sm text-gray-300">
         <div>
-          <p className="font-semibold text-white mb-2">1. Backend Setup (Already Done ✅)</p>
+          <p className="font-semibold text-white mb-2 flex items-center gap-2">1. Backend Setup (Already Done <CheckCircle2 size={16} className="text-green-400" />)</p>
           <p>Your backend has the Plaid routes configured.</p>
         </div>
         <div>
@@ -226,7 +227,7 @@ PLAID_ENV=sandbox  # or development/production`}</pre>
           </ul>
         </div>
         <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-4">
-          <p className="font-semibold text-yellow-400 mb-2">⚠️ Important Notes:</p>
+          <p className="font-semibold text-yellow-400 mb-2 flex items-center gap-2"><AlertTriangle size={16} /> Important Notes:</p>
           <ul className="list-disc list-inside space-y-1 ml-2 text-yellow-200">
             <li>Sandbox mode is free and has unlimited test institutions</li>
             <li>Production mode requires approval and has costs per API call</li>
@@ -268,8 +269,8 @@ const PlaidDemo: React.FC = () => {
           {!connected ? (
             <>
               <div className="text-center mb-6">
-                <div className="w-20 h-20 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-4xl">🏦</span>
+                <div className="w-20 h-20 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4 text-white">
+                  <Building2 size={38} />
                 </div>
                 <h2 className="text-2xl font-bold text-white mb-2">Link Your Bank</h2>
                 <p className="text-gray-400">Securely connect your bank account with Plaid</p>
@@ -279,23 +280,23 @@ const PlaidDemo: React.FC = () => {
 
               <div className="mt-6 space-y-3">
                 <div className="flex items-center gap-3 text-sm text-gray-400">
-                  <span className="text-green-400">✓</span>
+                  <Check size={18} className="text-green-400" />
                   <span>Bank-level 256-bit encryption</span>
                 </div>
                 <div className="flex items-center gap-3 text-sm text-gray-400">
-                  <span className="text-green-400">✓</span>
+                  <Check size={18} className="text-green-400" />
                   <span>Read-only access to your accounts</span>
                 </div>
                 <div className="flex items-center gap-3 text-sm text-gray-400">
-                  <span className="text-green-400">✓</span>
+                  <Check size={18} className="text-green-400" />
                   <span>Trusted by millions of users</span>
                 </div>
               </div>
             </>
           ) : (
             <div className="text-center">
-              <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-4xl">✅</span>
+              <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4 text-green-400">
+                <CheckCircle2 size={38} />
               </div>
               <h2 className="text-2xl font-bold text-white mb-2">Connected Successfully!</h2>
               <p className="text-gray-400 mb-4">

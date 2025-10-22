@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./HeroPage.css";
 import FeaturesSection from "./FeaturesSection";
 import BrandsSection from "./BrandsSection";
+import { ArrowUpRight, ChevronDown } from 'lucide-react';
 import HowItWorks from "./HowItWorks";
 import CTAsection from "./CTAsection";
 import Pricing from "./Pricing";
@@ -74,7 +75,7 @@ const HeroPage: React.FC = () => {
         </div>
         <div className="data-overlay data-bottom-left">
           PORTFOLIO: $127,450<br />
-          <span className="pulse-green">↑ +12.5%</span> (24h)
+          <span className="pulse-green inline-flex items-center gap-1"><ArrowUpRight size={14} /> +12.5%</span> (24h)
         </div>
         <div className="data-overlay data-bottom-right">
           ACTIVE USERS: 24,891<br />
@@ -99,7 +100,7 @@ const HeroPage: React.FC = () => {
         {/* Scroll Indicator */}
         <div className="scroll-indicator">
           <div className="scroll-text">Scroll to explore</div>
-          <div className="scroll-arrow">↓</div>
+          <div className="scroll-arrow flex items-center justify-center"><ChevronDown size={18} /></div>
         </div>
       </div>
       <BrandsSection />

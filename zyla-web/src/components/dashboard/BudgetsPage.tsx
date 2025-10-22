@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, Plus } from 'lucide-react';
+import { isDemoUser } from '../../utils/demoMode';
 
 type Budget = {
   id: string;
@@ -31,7 +33,7 @@ const mockBudgets: Budget[] = [
 
 const BudgetsPage: React.FC = () => {
   const navigate = useNavigate();
-  const [budgets, setBudgets] = useState<Budget[]>(mockBudgets);
+  const [budgets, setBudgets] = useState<Budget[]>(isDemoUser() ? mockBudgets : []);
   const [showAddModal, setShowAddModal] = useState(false);
   const [newBudget, setNewBudget] = useState<NewBudget>({
     category: 'Food & Dining',
@@ -83,7 +85,7 @@ const BudgetsPage: React.FC = () => {
   const totalRemaining = totalBudget - totalSpent;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 p-8">
+    <div className="min-h-screen bg-gradient-to-br from-[#0a1628] via-[#020617] to-[#0a1628] p-8">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
@@ -94,15 +96,16 @@ const BudgetsPage: React.FC = () => {
           <div className="flex items-center gap-3">
             <button
               onClick={() => navigate('/dashboard')}
-              className="bg-gray-700 hover:bg-gray-600 text-white px-4 py-3 rounded-xl font-medium transition-colors"
+              className="inline-flex items-center gap-2 text-indigo-300 hover:text-white hover:underline underline-offset-4 px-0 py-0 bg-transparent border-0"
             >
-              ← Back to Dashboard
+              <ChevronLeft size={18} />
+              Back to Dashboard
             </button>
             <button
               onClick={() => setShowAddModal(true)}
-              className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg hover:shadow-indigo-500/50 transition-all flex items-center gap-2"
+              className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white px-6 py-3 rounded-xl font-semibold backdrop-blur hover:bg-white/20 hover:shadow-white/20 transition"
             >
-              <span>+</span>
+              <Plus size={18} />
               Add Budget
             </button>
           </div>
