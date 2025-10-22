@@ -13,8 +13,11 @@ const ContactPage: React.FC = () => {
   });
 
   const [showStatus, setShowStatus] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
+    const token = localStorage.getItem('zyla_token');
+    setIsLoggedIn(!!token);
     // Scroll reveal animation
     const observerOptions = {
       threshold: 0.1,
@@ -56,7 +59,7 @@ const ContactPage: React.FC = () => {
           </Link>
           <div className="contact-nav-links">
             <Link to="/" className="contact-nav-link">Home</Link>
-            <Link to="/login" className="contact-nav-link">Login</Link>
+            {!isLoggedIn && <Link to="/login" className="contact-nav-link">Login</Link>}
           </div>
         </div>
       </nav>

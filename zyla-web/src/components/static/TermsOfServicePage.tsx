@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../assests/logo.png';
 import './TermsOfServicePage.css';
 
 const TermsOfServicePage: React.FC = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem('zyla_token');
+    setIsLoggedIn(!!token);
+  }, []);
+
   return (
     <div className="terms-page">
       {/* Glass floating navbar */}
@@ -15,7 +22,9 @@ const TermsOfServicePage: React.FC = () => {
           </Link>
           <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
             <Link to="/" className="terms-nav-link">Home</Link>
-            <Link to="/about" className="terms-nav-link">About</Link>
+            {!isLoggedIn && (
+              <Link to="/login" className="privacy-nav-link">Login</Link>
+            )}
           </div>
         </div>
       </nav>

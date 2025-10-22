@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Target, Rocket, Users, Shield, Zap, TrendingUp, Award, Mail } from 'lucide-react';
 import './AboutUsPage_NEW.css';
@@ -7,7 +7,13 @@ import logo from '../../assests/logo.png';
 const AboutUsPage: React.FC = () => {
   const cardsRef = useRef<Array<HTMLDivElement | null>>([]);
 
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   useEffect(() => {
+    // Check login state
+    const token = localStorage.getItem('zyla_token');
+    setIsLoggedIn(!!token);
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -38,11 +44,13 @@ const AboutUsPage: React.FC = () => {
           <li>
             <Link to="/">Home</Link>
           </li>
-          <li>
-            <Link to="/auth" className="navbar-btn">
-              Log In
-            </Link>
-          </li>
+          {!isLoggedIn && (
+            <li>
+              <Link to="/auth" className="navbar-btn">
+                Log In
+              </Link>
+            </li>
+          )}
         </ul>
       </nav>
 

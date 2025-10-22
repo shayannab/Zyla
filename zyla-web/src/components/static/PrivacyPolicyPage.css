@@ -1,5 +1,5 @@
-/* Terms of Service Page - keep current bg, add glass navbar and dramatic typography */
-.terms-page {
+/* Privacy Policy Page - consistent glass navbar like other pages */
+.privacy-page {
   position: relative;
   min-height: 100vh;
   background: linear-gradient(to bottom right, rgb(17, 24, 39), rgb(31, 41, 55), rgb(17, 24, 39));
@@ -7,7 +7,7 @@
   color: #fff;
 }
 
-.terms-page::before {
+.privacy-page::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -20,8 +20,8 @@
   z-index: 0;
 }
 
-/* Glass floating navbar */
-.terms-navbar {
+/* Glass floating navbar - capsule style */
+.privacy-navbar {
   position: fixed;
   top: 1rem;
   left: 50%;
@@ -31,12 +31,12 @@
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   border: 1px solid rgba(255,255,255,0.18);
-  border-radius: 30px;
+  border-radius: 36px;
   z-index: 50;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
 }
 
-.terms-navbar-content {
+.privacy-navbar-content {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -44,38 +44,44 @@
   min-height: 52px;
 }
 
-.terms-logo {
+.privacy-logo {
   display: flex;
   align-items: center;
   gap: 10px;
   text-decoration: none;
 }
 
-.terms-logo-img {
+.privacy-logo-img {
   width: 32px;
   height: 32px;
   border-radius: 8px;
   display: block;
 }
 
-.terms-logo-text {
+.privacy-logo-text {
   font-weight: 700;
   color: #ffffff;
   letter-spacing: 0.3px;
   line-height: 1;
 }
 
-.terms-nav-link {
+.privacy-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.privacy-nav-link {
   color: rgba(255,255,255,0.9);
   text-decoration: none;
   font-weight: 500;
   transition: color 0.2s ease;
 }
 
-.terms-nav-link:hover { color: #ffffff; }
+.privacy-nav-link:hover { color: #ffffff; }
 
 /* Content wrapper */
-.terms-content {
+.privacy-content {
   position: relative;
   z-index: 1;
   padding-top: 120px;
@@ -87,7 +93,7 @@
 }
 
 /* Dramatic typography hierarchy */
-.terms-hero-title {
+.privacy-hero-title {
   font-size: clamp(3rem, 8vw, 5rem);
   font-weight: 900;
   line-height: 1.1;
@@ -99,7 +105,7 @@
   background-clip: text;
 }
 
-.terms-last-updated {
+.privacy-last-updated {
   font-size: 0.9rem;
   color: rgba(156, 163, 175, 0.9);
   font-weight: 400;
@@ -107,11 +113,11 @@
   letter-spacing: 0.02em;
 }
 
-.terms-section {
+.privacy-section {
   margin-bottom: 3.5rem;
 }
 
-.terms-section-number {
+.privacy-section-number {
   display: inline-block;
   font-size: 4rem;
   font-weight: 900;
@@ -121,7 +127,7 @@
   letter-spacing: -0.05em;
 }
 
-.terms-section-title {
+.privacy-section-title {
   font-size: 1.75rem;
   font-weight: 700;
   color: #ffffff;
@@ -130,20 +136,20 @@
   line-height: 1.3;
 }
 
-.terms-text {
+.privacy-text {
   color: rgba(209, 213, 219, 0.95);
   line-height: 1.8;
   font-size: 1.05rem;
   margin-bottom: 1rem;
 }
 
-.terms-list {
+.privacy-list {
   list-style: none;
   padding-left: 0;
   margin: 1.5rem 0;
 }
 
-.terms-list li {
+.privacy-list li {
   position: relative;
   padding-left: 2rem;
   margin-bottom: 0.75rem;
@@ -152,7 +158,7 @@
   font-size: 1.05rem;
 }
 
-.terms-list li::before {
+.privacy-list li::before {
   content: "→";
   position: absolute;
   left: 0.5rem;
@@ -160,7 +166,7 @@
   font-weight: 600;
 }
 
-.terms-link {
+.privacy-link {
   color: #818cf8;
   text-decoration: none;
   font-weight: 500;
@@ -168,12 +174,12 @@
   border-bottom: 1px solid rgba(129, 140, 248, 0.3);
 }
 
-.terms-link:hover {
+.privacy-link:hover {
   color: #a5b4fc;
   border-bottom-color: rgba(165, 180, 252, 0.5);
 }
 
-.terms-divider {
+.privacy-divider {
   height: 1px;
   background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent);
   margin: 3rem 0;
