@@ -1,5 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { 
+  Wallet, 
+  TrendingUp, 
+  DollarSign, 
+  Building2, 
+  Brain, 
+  Home, 
+  CreditCard, 
+  PieChart, 
+  Lightbulb, 
+  Settings, 
+  LogOut,
+  ChevronLeft,
+  ChevronRight
+} from 'lucide-react';
+import logo from '../../assests/logo.png';
+import './ZylaDashboard.css';
 
 // Utility functions
 const formatCurrency = (amount: number) => {
@@ -93,20 +110,30 @@ const PlaidLinkButton: React.FC<{ onSuccess?: () => void }> = ({ onSuccess }) =>
     <button
       onClick={openPlaidLink}
       disabled={loading}
-      className="w-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white py-3 px-6 rounded-xl font-semibold hover:shadow-lg hover:shadow-indigo-500/50 transition-all duration-200 disabled:opacity-50"
+      className="btn-animated w-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white py-3 px-6 rounded-xl font-semibold hover:shadow-lg hover:shadow-indigo-500/50 smooth-transition disabled:opacity-50 flex items-center justify-center gap-2"
     >
-      {loading ? 'Connecting...' : '🏦 Connect Bank Account'}
+      {loading ? (
+        <span className="flex items-center gap-2">
+          <div className="spinner w-5 h-5 border-2 border-white border-t-transparent rounded-full"></div>
+          Connecting...
+        </span>
+      ) : (
+        <>
+          <Building2 size={20} color="white" />
+          Connect Bank Account
+        </>
+      )}
     </button>
   );
 };
 
 // Lightweight skeleton helpers
 const Skeleton: React.FC<{ className?: string }> = ({ className = '' }) => (
-  <div className={`animate-pulse bg-gray-700/60 rounded ${className}`} />
+  <div className={`skeleton-shimmer rounded ${className}`} />
 );
 
 const OverviewCardSkeleton = () => (
-  <div className="bg-gray-800/50 border border-gray-700 rounded-2xl p-6 backdrop-blur-sm">
+  <div className="glass-card rounded-2xl p-6 backdrop-blur-sm">
     <div className="flex items-center justify-between mb-4">
       <Skeleton className="h-8 w-8 rounded-full" />
       <Skeleton className="h-5 w-16 rounded-full" />
@@ -116,8 +143,8 @@ const OverviewCardSkeleton = () => (
   </div>
 );
 
-const AccountItemSkeleton = () => (
-  <div className="p-4 rounded-xl bg-gray-900/50 border border-gray-700">
+const AccountCardSkeleton = () => (
+  <div className="p-4 rounded-xl glass-card">
     <div className="flex items-center justify-between">
       <div className="space-y-2">
         <Skeleton className="h-4 w-40" />
@@ -132,14 +159,14 @@ const AccountItemSkeleton = () => (
 );
 
 const InsightItemSkeleton = () => (
-  <div className="p-4 rounded-xl border bg-gray-900/40 border-gray-700">
+  <div className="p-4 rounded-xl border bg-transparent border-white/20">
     <Skeleton className="h-4 w-40 mb-2" />
     <Skeleton className="h-3 w-56" />
   </div>
 );
 
 const TransactionItemSkeleton = () => (
-  <div className="flex items-center justify-between p-4 rounded-xl bg-gray-900/50">
+  <div className="flex items-center justify-between p-4 rounded-xl bg-transparent border border-white/20">
     <div className="flex items-center gap-3">
       <Skeleton className="h-10 w-10 rounded-full" />
       <div className="space-y-2">
@@ -161,12 +188,26 @@ const CategoryBarSkeleton = () => (
   </div>
 );
 
+const AccountItemSkeleton = () => (
+  <div className="p-4 rounded-xl bg-transparent border border-white/20">
+    <div className="flex items-center justify-between">
+      <div className="space-y-2">
+        <Skeleton className="h-4 w-40" />
+        <Skeleton className="h-3 w-28" />
+      </div>
+      <div className="text-right space-y-2">
+        <Skeleton className="h-5 w-24 ml-auto" />
+        <Skeleton className="h-3 w-28 ml-auto" />
+      </div>
+    </div>
+  </div>
+);
+
 // Main Dashboard Component
 const ZylaDashboard: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [dashboardData, setDashboardData] = useState<any>(null);
   const [insights, setInsights] = useState<any[]>([]);
-  const [sidebarOpen, setSidebarOpen] = useState(true);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -265,12 +306,12 @@ const ZylaDashboard: React.FC = () => {
   const spendingByCategory = dashboardData?.spending_by_category || [];
 
   const navItems = [
-    { name: 'Home', icon: '🏠', path: '/' },
-    { name: 'Dashboard', icon: '📊', path: '/dashboard' },
-    { name: 'Transactions', icon: '💸', path: '/transactions' },
-    { name: 'Accounts', icon: '🏦', path: '/accounts' },
-    { name: 'Insights', icon: '🧠', path: '/insights' },
-    { name: 'Budgets', icon: '🎯', path: '/budgets' }
+    { name: 'Home', icon: <Home size={20} color="white" />, path: '/' },
+    { name: 'Dashboard', icon: <PieChart size={20} color="white" />, path: '/dashboard' },
+    { name: 'Transactions', icon: <CreditCard size={20} color="white" />, path: '/transactions' },
+    { name: 'Accounts', icon: <Building2 size={20} color="white" />, path: '/accounts' },
+    { name: 'Insights', icon: <Brain size={20} color="white" />, path: '/insights' },
+    { name: 'Budgets', icon: <Lightbulb size={20} color="white" />, path: '/budgets' }
   ].map(item => ({
     ...item,
     active: item.path === '/'
@@ -279,297 +320,211 @@ const ZylaDashboard: React.FC = () => {
   }));
 
   return (
-  <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
-      {/* Sidebar */}
-      <aside className={`fixed left-0 top-0 h-full ${sidebarOpen ? 'w-64' : 'w-20'} bg-black/40 border-r border-gray-800 backdrop-blur-xl transition-all duration-300 z-50`}>
-        <div className="flex flex-col h-full p-6">
-          {/* Logo */}
-          <div className="flex items-center gap-3 mb-8">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-xl">
-              Z
-            </div>
-            {sidebarOpen && <span className="text-xl font-bold text-white">Zyla</span>}
-          </div>
-
-          {/* Profile */}
-          {sidebarOpen && dashboardData?.user && (
-            <div className="p-4 rounded-2xl bg-gray-800/50 mb-6 border border-gray-700">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-semibold text-lg">
-                  {dashboardData.user.name?.charAt(0).toUpperCase()}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="font-semibold text-white truncate">{dashboardData.user.name}</p>
-                  <p className="text-xs text-gray-400 truncate">{dashboardData.user.email}</p>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Navigation */}
-          <nav className="space-y-2 flex-1">
-            {navItems.map((item) => (
-              <button
-                key={item.name}
-                onClick={() => navigate(item.path)}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
-                  item.active
-                    ? 'bg-indigo-500 text-white shadow-lg shadow-indigo-500/50'
-                    : 'text-gray-400 hover:bg-gray-800/50 hover:text-white'
-                }`}
-              >
-                <span className="text-xl">{item.icon}</span>
-                {sidebarOpen && <span className="font-medium">{item.name}</span>}
-              </button>
-            ))}
-          </nav>
-
-          {/* Logout */}
-          {sidebarOpen && (
-            <button
-              onClick={handleLogout}
-              className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-red-400 hover:bg-red-500/10 transition-all duration-200 mt-4"
-            >
-              <span className="text-xl">🚪</span>
-              <span className="font-medium">Logout</span>
-            </button>
-          )}
+    <div className="min-h-screen bg-gradient-to-br from-[#0a1628] via-[#020617] to-[#0a1628] flex flex-col">
+      {/* Top Navbar */}
+      <nav className="flex items-center justify-between px-8 py-4 bg-transparent backdrop-blur-xl z-50">
+        <div className="flex items-center gap-4">
+          <img src={logo} alt="Zyla" className="w-10 h-10 object-contain rounded-xl shadow-lg" />
+          <span className="text-2xl font-bold text-white tracking-wide">Zyla</span>
         </div>
-      </aside>
-
-      {/* Main Content */}
-      <main className={`${sidebarOpen ? 'ml-64' : 'ml-20'} transition-all duration-300 p-8`}>
-        {/* Header */}
-        <div className="flex items-center justify-between mb-8">
-          <div>
+        <div className="flex items-center gap-2 bg-[#10182a] rounded-full px-2 py-1 shadow-md">
+          <button className="px-4 py-2 rounded-full text-white font-medium hover:bg-indigo-600/20 transition">Dashboard</button>
+          <button className="px-4 py-2 rounded-full text-white font-medium hover:bg-indigo-600/20 transition">Statistics</button>
+          <button className="px-4 py-2 rounded-full text-white font-medium hover:bg-indigo-600/20 transition">Transactions</button>
+          <button className="px-4 py-2 rounded-full text-white font-medium hover:bg-indigo-600/20 transition">My wallet</button>
+        </div>
+        <div className="flex items-center gap-4">
+          <button className="p-2 rounded-full hover:bg-white/10 transition"><Settings size={20} color="white" /></button>
+          <button className="p-2 rounded-full hover:bg-white/10 transition"><svg width="20" height="20" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="9" cy="9" r="7" /><line x1="16" y1="16" x2="12.5" y2="12.5" /></svg></button>
+          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-semibold text-lg shadow-lg">
+            {dashboardData?.user?.name?.charAt(0).toUpperCase() || 'U'}
+          </div>
+        </div>
+      </nav>
+      {/* Main Content Grid */}
+      <main className="flex-1 w-full max-w-[1600px] mx-auto px-8 py-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* Left/Main Cards Grid */}
+        <section className="lg:col-span-2 grid grid-cols-1 gap-8">
+          {/* Header */}
+          <div className="mb-2">
             <h1 className="text-3xl font-bold text-white mb-2">Financial Dashboard</h1>
             <p className="text-gray-400">
               {loading ? <span className="inline-block"><Skeleton className="h-4 w-40" /></span> : <>Welcome back, {dashboardData?.user?.name}</>}
             </p>
           </div>
-          <button
-            onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="p-3 rounded-xl bg-gray-800 text-white hover:bg-gray-700 transition-colors"
-          >
-            {sidebarOpen ? '◀' : '▶'}
-          </button>
-        </div>
 
-        {/* No Bank Connection Banner */}
-        {!loading && !hasPlaidConnection && (
-          <div className="mb-8 p-6 rounded-2xl bg-gradient-to-r from-indigo-900/50 to-purple-900/50 border border-indigo-500/30">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-              <div className="flex-1">
-                <h3 className="text-xl font-bold text-white mb-2">Connect Your Bank Account</h3>
-                <p className="text-gray-300">Link your bank to get AI-powered insights and track your spending automatically</p>
-              </div>
-              <div className="w-full md:w-auto md:min-w-[250px]">
-                <PlaidLinkButton onSuccess={handlePlaidSuccess} />
+          {/* No Bank Connection Banner */}
+          {!loading && !hasPlaidConnection && (
+            <div className="mb-8 p-6 rounded-2xl bg-gradient-to-r from-indigo-900/50 to-purple-900/50 shadow-lg shadow-indigo-500/20">
+              <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div className="flex-1">
+                  <h3 className="text-xl font-bold text-white mb-2">Connect Your Bank Account</h3>
+                  <p className="text-gray-300">Link your bank to get AI-powered insights and track your spending automatically</p>
+                </div>
+                <div className="w-full md:w-auto md:min-w-[250px]">
+                  <PlaidLinkButton onSuccess={handlePlaidSuccess} />
+                </div>
               </div>
             </div>
-          </div>
-        )}
-        {loading && (
-          <div className="mb-8 p-6 rounded-2xl bg-gray-800/40 border border-gray-700">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-              <div className="flex-1">
-                <Skeleton className="h-6 w-64 mb-2" />
-                <Skeleton className="h-4 w-80" />
-              </div>
-              <div className="w-full md:w-auto md:min-w-[250px]">
-                <Skeleton className="h-12 w-full rounded-xl" />
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Overview Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          {loading ? (
-            <>
-              <OverviewCardSkeleton />
-              <OverviewCardSkeleton />
-              <OverviewCardSkeleton />
-              <OverviewCardSkeleton />
-            </>
-          ) : (
-            <>
-              <div className="bg-gray-800/50 border border-gray-700 rounded-2xl p-6 backdrop-blur-sm hover:scale-105 transition-transform">
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-3xl">💰</span>
-                  <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-green-500/20 text-green-400">
-                    {financialSummary.total_balance > 0 ? '+' : ''}{((financialSummary.net_cash_flow / Math.max(financialSummary.total_balance, 1)) * 100).toFixed(1)}%
-                  </span>
-                </div>
-                <p className="text-sm text-gray-400 mb-1">Total Balance</p>
-                <p className="text-2xl font-bold text-white">{formatCurrency(financialSummary.total_balance || 0)}</p>
-              </div>
-
-              <div className="bg-gray-800/50 border border-gray-700 rounded-2xl p-6 backdrop-blur-sm hover:scale-105 transition-transform">
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-3xl">📊</span>
-                </div>
-                <p className="text-sm text-gray-400 mb-1">Monthly Spending</p>
-                <p className="text-2xl font-bold text-white">{formatCurrency(financialSummary.monthly_spending || 0)}</p>
-              </div>
-
-              <div className="bg-gray-800/50 border border-gray-700 rounded-2xl p-6 backdrop-blur-sm hover:scale-105 transition-transform">
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-3xl">💸</span>
-                  <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-green-500/20 text-green-400">
-                    Income
-                  </span>
-                </div>
-                <p className="text-sm text-gray-400 mb-1">Monthly Income</p>
-                <p className="text-2xl font-bold text-white">{formatCurrency(financialSummary.monthly_income || 0)}</p>
-              </div>
-
-              <div className="bg-gray-800/50 border border-gray-700 rounded-2xl p-6 backdrop-blur-sm hover:scale-105 transition-transform">
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-3xl">🏦</span>
-                </div>
-                <p className="text-sm text-gray-400 mb-1">Connected Accounts</p>
-                <p className="text-2xl font-bold text-white">{financialSummary.accounts_count || 0}</p>
-              </div>
-            </>
           )}
-        </div>
-
-        {/* Accounts & Insights Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-          {/* Accounts List */}
-          <div className="lg:col-span-2 bg-gray-800/50 border border-gray-700 rounded-2xl p-6 backdrop-blur-sm">
-            <h2 className="text-xl font-bold text-white mb-6">Your Accounts</h2>
-            {loading ? (
-              <div className="space-y-4">
-                <AccountItemSkeleton />
-                <AccountItemSkeleton />
-                <AccountItemSkeleton />
-              </div>
-            ) : accounts.length > 0 ? (
-              <div className="space-y-4">
-                {accounts.map((account: any) => (
-                  <div key={account.id} className="p-4 rounded-xl bg-gray-900/50 border border-gray-700 hover:border-indigo-500/50 transition-colors">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="font-semibold text-white">{account.name}</p>
-                        <p className="text-sm text-gray-400">{account.type} • {account.subtype}</p>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-xl font-bold text-white">{formatCurrency(account.currentBalance)}</p>
-                        <p className="text-xs text-gray-400">Available: {formatCurrency(account.availableBalance)}</p>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="text-center py-12">
-                <div className="w-16 h-16 bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-3xl">🏦</span>
+          {loading && (
+            <div className="mb-8 p-6 rounded-2xl glass-card">
+              <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div className="flex-1">
+                  <Skeleton className="h-6 w-64 mb-2" />
+                  <Skeleton className="h-4 w-80" />
                 </div>
-                <p className="text-gray-400 mb-4">No accounts connected yet</p>
-                <PlaidLinkButton onSuccess={handlePlaidSuccess} />
+                <div className="w-full md:w-auto md:min-w-[250px]">
+                  <Skeleton className="h-12 w-full rounded-xl" />
+                </div>
               </div>
-            )}
-          </div>
-
-          {/* AI Insights */}
-          <div className="bg-gray-800/50 border border-gray-700 rounded-2xl p-6 backdrop-blur-sm">
-            <div className="flex items-center gap-2 mb-6">
-              <span className="text-2xl">🧠</span>
-              <h2 className="text-xl font-bold text-white">AI Insights</h2>
             </div>
+          )}
+
+          {/* Overview Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             {loading ? (
-              <div className="space-y-3">
-                <InsightItemSkeleton />
-                <InsightItemSkeleton />
-                <InsightItemSkeleton />
-                <InsightItemSkeleton />
-              </div>
-            ) : insights.length > 0 ? (
-              <div className="space-y-3">
-                {insights.slice(0, 4).map((insight: any) => (
-                  <div
-                    key={insight.id}
-                    className={`p-4 rounded-xl border transition-all hover:scale-105 cursor-pointer ${
-                      insight.priority === 'high'
-                        ? 'bg-red-500/10 border-red-500/30'
-                        : insight.priority === 'medium'
-                        ? 'bg-yellow-500/10 border-yellow-500/30'
-                        : 'bg-blue-500/10 border-blue-500/30'
-                    }`}
-                  >
-                    <p className="text-sm font-semibold text-white mb-1">{insight.title}</p>
-                    <p className="text-xs text-gray-300">{insight.message}</p>
-                  </div>
-                ))}
-              </div>
+              <>
+                <OverviewCardSkeleton />
+                <OverviewCardSkeleton />
+                <OverviewCardSkeleton />
+                <OverviewCardSkeleton />
+              </>
             ) : (
-              <div className="text-center py-8">
-                <p className="text-gray-400 text-sm">Connect your bank to get AI-powered insights</p>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Recent Transactions & Spending */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Recent Transactions */}
-          <div className="lg:col-span-2 bg-gray-800/50 border border-gray-700 rounded-2xl p-6 backdrop-blur-sm">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-bold text-white">Recent Transactions</h2>
-              <button 
-                onClick={() => navigate('/transactions')}
-                className="text-indigo-400 text-sm font-medium hover:text-indigo-300 transition-colors"
-              >
-                View All →
-              </button>
-            </div>
-            {loading ? (
-              <div className="space-y-3">
-                <TransactionItemSkeleton />
-                <TransactionItemSkeleton />
-                <TransactionItemSkeleton />
-                <TransactionItemSkeleton />
-                <TransactionItemSkeleton />
-                <TransactionItemSkeleton />
-              </div>
-            ) : recentTransactions.length > 0 ? (
-              <div className="space-y-3">
-                {recentTransactions.slice(0, 6).map((transaction: any) => (
-                  <div key={transaction.id} className="flex items-center justify-between p-4 rounded-xl bg-gray-900/50 hover:bg-gray-900/80 transition-colors">
-                    <div className="flex items-center gap-3">
-                      <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                        transaction.type === 'credit' ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'
-                      }`}>
-                        {transaction.type === 'credit' ? '↓' : '↑'}
-                      </div>
-                      <div>
-                        <p className="font-medium text-white">{transaction.description}</p>
-                        <p className="text-xs text-gray-400">{formatDate(transaction.date)} • {transaction.aiCategory || 'Uncategorized'}</p>
-                      </div>
+              <>
+                <div className="stat-card glass-card rounded-2xl p-6 backdrop-blur-sm stagger-item">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="icon-container">
+                      <Wallet size={32} color="white" />
                     </div>
-                    <span className={`font-semibold ${transaction.type === 'credit' ? 'text-green-400' : 'text-white'}`}>
-                      {transaction.type === 'credit' ? '+' : '-'}{formatCurrency(Math.abs(transaction.amount))}
+                    <span className="badge-pulse text-xs font-semibold px-2.5 py-1 rounded-full bg-green-500/20 text-green-400">
+                      {financialSummary.total_balance > 0 ? '+' : ''}{((financialSummary.net_cash_flow / Math.max(financialSummary.total_balance, 1)) * 100).toFixed(1)}%
                     </span>
                   </div>
-                ))}
-              </div>
-            ) : (
-              <div className="text-center py-12">
-                <div className="w-16 h-16 bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-3xl">💸</span>
+                  <p className="text-sm text-gray-400 mb-1">Total Balance</p>
+                  <p className="text-2xl font-bold text-white count-up">{formatCurrency(financialSummary.total_balance || 0)}</p>
                 </div>
-                <p className="text-gray-400 mb-2">No transactions yet</p>
-                <p className="text-sm text-gray-500">Connect your bank to see your transactions</p>
-              </div>
+
+                <div className="stat-card glass-card rounded-2xl p-6 backdrop-blur-sm stagger-item" style={{ animationDelay: '0.1s' }}>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="icon-container">
+                      <TrendingUp size={32} color="white" />
+                    </div>
+                  </div>
+                  <p className="text-sm text-gray-400 mb-1">Monthly Spending</p>
+                  <p className="text-2xl font-bold text-white count-up">{formatCurrency(financialSummary.monthly_spending || 0)}</p>
+                </div>
+
+                <div className="stat-card glass-card rounded-2xl p-6 backdrop-blur-sm stagger-item" style={{ animationDelay: '0.15s' }}>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="icon-container">
+                      <DollarSign size={32} color="white" />
+                    </div>
+                    <span className="badge-pulse text-xs font-semibold px-2.5 py-1 rounded-full bg-green-500/20 text-green-400">
+                      Income
+                    </span>
+                  </div>
+                  <p className="text-sm text-gray-400 mb-1">Monthly Income</p>
+                  <p className="text-2xl font-bold text-white count-up">{formatCurrency(financialSummary.monthly_income || 0)}</p>
+                </div>
+
+                <div className="stat-card glass-card rounded-2xl p-6 backdrop-blur-sm stagger-item" style={{ animationDelay: '0.2s' }}>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="icon-container">
+                      <Building2 size={32} color="white" />
+                    </div>
+                  </div>
+                  <p className="text-sm text-gray-400 mb-1">Connected Accounts</p>
+                  <p className="text-2xl font-bold text-white count-up">{financialSummary.accounts_count || 0}</p>
+                </div>
+              </>
             )}
+          </div>
+
+          {/* Accounts & Transactions Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+            {/* Accounts List */}
+            <div className="glass-card rounded-2xl p-6 backdrop-blur-sm">
+              <h2 className="section-header text-xl font-bold text-white mb-6">Your Accounts</h2>
+              {loading ? (
+                <div className="space-y-4">
+                  <AccountItemSkeleton />
+                  <AccountItemSkeleton />
+                  <AccountItemSkeleton />
+                </div>
+              ) : accounts.length > 0 ? (
+                <div className="space-y-4">
+                  {accounts.map((account: any, index: number) => (
+                    <div key={account.id} className="account-card p-4 rounded-xl bg-gray-900/50 smooth-transition" style={{ animationDelay: `${0.05 * index}s` }}>
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="font-semibold text-white">{account.name}</p>
+                          <p className="text-sm text-gray-400">{account.type} • {account.subtype}</p>
+                        </div>
+                        <div className="text-right">
+                          <p className="font-bold text-white">{formatCurrency(account.balances?.current || 0)}</p>
+                          <p className="text-xs text-gray-400">{account.institution_name}</p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-8">
+                  <p className="text-gray-400 text-sm">No accounts connected yet</p>
+                  <p className="text-xs text-gray-500 mt-2">Connect your bank to see your accounts</p>
+                </div>
+              )}
+            </div>
+
+            {/* Recent Transactions */}
+            <div className="glass-card rounded-2xl p-6 backdrop-blur-sm">
+              <h2 className="section-header text-xl font-bold text-white mb-6">Recent Transactions</h2>
+              {loading ? (
+                <div className="space-y-3">
+                  <TransactionItemSkeleton />
+                  <TransactionItemSkeleton />
+                  <TransactionItemSkeleton />
+                  <TransactionItemSkeleton />
+                  <TransactionItemSkeleton />
+                  <TransactionItemSkeleton />
+                </div>
+              ) : recentTransactions.length > 0 ? (
+                <div className="space-y-3">
+                  {recentTransactions.slice(0, 6).map((transaction: any, index: number) => (
+                    <div key={transaction.id} className="transaction-row flex items-center justify-between p-4 rounded-xl bg-gray-900/50 smooth-transition" style={{ animationDelay: `${0.05 * index}s` }}>
+                      <div className="flex items-center gap-3">
+                        <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                          transaction.type === 'credit' ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'
+                        }`}>
+                          {transaction.type === 'credit' ? '↓' : '↑'}
+                        </div>
+                        <div>
+                          <p className="font-medium text-white">{transaction.description}</p>
+                          <p className="text-xs text-gray-400">{formatDate(transaction.date)} • {transaction.aiCategory || 'Uncategorized'}</p>
+                        </div>
+                      </div>
+                      <span className={`font-semibold ${transaction.type === 'credit' ? 'text-green-400' : 'text-white'}`}>
+                        {transaction.type === 'credit' ? '+' : '-'}{formatCurrency(Math.abs(transaction.amount))}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-12">
+                  <div className="w-16 h-16 bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <CreditCard size={32} color="white" />
+                  </div>
+                  <p className="text-gray-400 mb-2">No transactions yet</p>
+                  <p className="text-sm text-gray-500">Connect your bank to see your transactions</p>
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Spending by Category */}
-          <div className="bg-gray-800/50 border border-gray-700 rounded-2xl p-6 backdrop-blur-sm">
-            <h2 className="text-xl font-bold text-white mb-6">Spending by Category</h2>
+          <div className="glass-card rounded-2xl p-6 backdrop-blur-sm">
+            <h2 className="section-header text-xl font-bold text-white mb-6">Spending by Category</h2>
             {loading ? (
               <div className="space-y-4">
                 <CategoryBarSkeleton />
@@ -581,14 +536,14 @@ const ZylaDashboard: React.FC = () => {
             ) : spendingByCategory.length > 0 ? (
               <div className="space-y-4">
                 {spendingByCategory.slice(0, 5).map((cat: any, index: number) => (
-                  <div key={index}>
+                  <div key={index} className="stagger-item" style={{ animationDelay: `${0.05 * index}s` }}>
                     <div className="flex justify-between mb-2">
                       <span className="text-sm text-gray-300">{cat.category}</span>
-                      <span className="text-sm font-semibold text-white">{formatCurrency(cat.amount)}</span>
+                      <span className="text-sm font-semibold text-white count-up">{formatCurrency(cat.amount)}</span>
                     </div>
-                    <div className="w-full bg-gray-700 rounded-full h-2">
+                    <div className="w-full bg-gray-700 rounded-full h-2 overflow-hidden">
                       <div
-                        className="bg-gradient-to-r from-indigo-500 to-purple-600 h-2 rounded-full transition-all duration-500"
+                        className="category-bar bg-gradient-to-r from-indigo-500 to-purple-600 h-2 rounded-full smooth-transition"
                         style={{ width: `${(cat.amount / spendingByCategory[0].amount) * 100}%` }}
                       ></div>
                     </div>
@@ -602,7 +557,36 @@ const ZylaDashboard: React.FC = () => {
               </div>
             )}
           </div>
-        </div>
+        </section>
+
+        {/* Right Column: Insights, Cards, Subscriptions, etc. */}
+        <aside className="lg:col-span-1 flex flex-col gap-8">
+          {/* Insights */}
+          <div className="glass-card rounded-2xl p-6 backdrop-blur-sm">
+            <h2 className="section-header text-xl font-bold text-white mb-6">AI Insights</h2>
+            {loading ? (
+              <div className="space-y-4">
+                <InsightItemSkeleton />
+                <InsightItemSkeleton />
+              </div>
+            ) : insights.length > 0 ? (
+              <div className="space-y-4">
+                {insights.map((insight: any, index: number) => (
+                  <div key={insight.id} className="p-4 rounded-xl bg-gray-900/50 smooth-transition stagger-item" style={{ animationDelay: `${0.05 * index}s` }}>
+                    <h3 className="font-semibold text-white mb-1">{insight.title}</h3>
+                    <p className="text-gray-300 text-sm">{insight.message}</p>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-8">
+                <p className="text-gray-400 text-sm">No insights yet</p>
+                <p className="text-xs text-gray-500 mt-2">Connect your bank to get personalized insights</p>
+              </div>
+            )}
+          </div>
+          {/* Add more right column widgets/cards here as needed */}
+        </aside>
       </main>
     </div>
   );
