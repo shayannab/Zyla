@@ -43,7 +43,6 @@ router.post('/register', async (req: Request, res: Response) => {
         error: 'User already exists',
         message: 'An account with this email already exists'
       });
-      return; // Stop execution
     }
 
     // Hash password & create user

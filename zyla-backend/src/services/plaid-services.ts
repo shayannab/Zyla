@@ -120,8 +120,8 @@ export class PlaidService {
         access_token: user.plaidAccessToken,
       };
 
-      const response = await plaidClient.accountsGet(request);
-      const accounts = response.data.accounts;
+  const response = await plaidClient.accountsGet(request);
+  const { accounts } = response.data;
 
       // Save accounts to database
       const savedAccounts = [];
@@ -196,8 +196,8 @@ export class PlaidService {
         end_date: endDate.toISOString().split('T')[0]!,
       };
 
-      const response = await plaidClient.transactionsGet(request);
-      const transactions = response.data.transactions;
+  const response = await plaidClient.transactionsGet(request);
+  const { transactions } = response.data;
 
       let newTransactionsCount = 0;
 
@@ -263,7 +263,7 @@ export class PlaidService {
    */
   static async getAccountBalances(userId: string): Promise<any[]> {
     try {
-      const accounts = await prisma.account.findMany({
+      return await prisma.account.findMany({
         where: { userId },
         select: {
           id: true,
@@ -277,8 +277,6 @@ export class PlaidService {
         },
         orderBy: { updatedAt: 'desc' }
       });
-
-      return accounts;
       
     } catch (error) {
       console.error('Get Account Balances Error:', error);
