@@ -3,7 +3,12 @@ import "./BrandsSection.css";
 
 const BrandsSection: React.FC = () => {
   // Realistic fintech/banking brands with icons
+  // Import Zyla brand logo
+  // Note: path intentionally points to "assests" as in the project structure
+  const zylaLogo = require("../../assests/logo.png");
+
   const companies = [
+    { name: "Zyla", subtitle: "Finance OS", logo: zylaLogo },
     { name: "Plaid", subtitle: "Banking APIs", icon: "🏦" },
     { name: "Stripe", subtitle: "Payments", icon: "💳" },
     { name: "Coinbase", subtitle: "Crypto", icon: "₿" },
@@ -36,7 +41,17 @@ const BrandsSection: React.FC = () => {
           <div className="brands-track">
             {duplicatedCompanies.map((company, index) => (
               <div key={`${company.name}-${index}`} className="brand-card">
-                <div className="brand-icon">{company.icon}</div>
+                <div className="brand-icon">
+                  {company.logo ? (
+                    <img
+                      src={company.logo}
+                      alt={`${company.name} logo`}
+                      className="brand-logo"
+                    />
+                  ) : (
+                    company.icon
+                  )}
+                </div>
                 <div className="brand-info">
                   <div className="brand-name">{company.name}</div>
                   <div className="brand-tag">{company.subtitle}</div>

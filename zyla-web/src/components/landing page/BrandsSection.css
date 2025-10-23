@@ -110,8 +110,8 @@
   flex: 0 0 auto;
   width: 180px;
   height: 110px;
-  background: var(--surface);
-  border: 1px solid var(--border);
+  background: transparent; /* remove card bg */
+  border: none; /* remove card border */
   border-radius: 1rem;
   display: flex;
   flex-direction: column;
@@ -119,40 +119,38 @@
   justify-content: center;
   gap: 0.7rem;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  backdrop-filter: blur(10px);
+  backdrop-filter: none; /* no glass blur */
   position: relative;
   overflow: hidden;
   cursor: pointer;
 }
 
 .brand-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(
-    circle at 50% 50%,
-    rgba(96, 165, 250, 0.08) 0%,
-    transparent 70%
-  );
-  opacity: 0;
-  transition: opacity 0.4s ease;
+  content: none; /* disable glow overlay */
 }
 
 .brand-card:hover::before {
-  opacity: 1;
+  opacity: 0; /* no hover overlay */
 }
 
 .brand-card:hover {
-  background: rgba(255, 255, 255, 0.04);
-  border-color: rgba(96, 165, 250, 0.3);
-  transform: translateY(-5px) scale(1.02);
-  box-shadow: 0 8px 30px rgba(96, 165, 250, 0.15);
+  background: transparent; /* keep transparent on hover */
+  border-color: transparent; /* no border on hover */
+  transform: translateY(-3px) scale(1.02); /* subtle lift only */
+  box-shadow: none; /* remove glow shadow */
 }
 
 .brand-icon {
-  font-size: 2.5rem;
+  font-size: 2rem; /* reduced icon size */
   transition: all 0.4s ease;
   filter: drop-shadow(0 0 10px rgba(96, 165, 250, 0.2));
+}
+
+.brand-logo {
+  height: 30px; /* reduced logo height */
+  width: auto;
+  object-fit: contain;
+  filter: brightness(1.2) contrast(1.05) drop-shadow(0 0 8px rgba(96, 165, 250, 0.25));
 }
 
 .brand-card:hover .brand-icon {
@@ -167,7 +165,7 @@
 
 .brand-name {
   font-family: 'Inter', sans-serif;
-  font-size: 1rem;
+  font-size: 0.9rem; /* reduced name size */
   font-weight: 600;
   color: var(--text);
   margin-bottom: 0.2rem;
@@ -181,7 +179,7 @@
 
 .brand-tag {
   font-family: 'Inter', sans-serif;
-  font-size: 0.75rem;
+  font-size: 0.7rem; /* reduced tag size */
   color: rgba(148, 163, 184, 0.7);
   letter-spacing: 0.03em;
   transition: color 0.3s ease;
@@ -211,15 +209,15 @@
   }
 
   .brand-icon {
-    font-size: 2.5rem;
+    font-size: 2rem; /* reduced on tablet */
   }
 
   .brand-name {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
 
   .brand-tag {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
   }
 
   .brands-track {
@@ -242,7 +240,7 @@
   }
 
   .brand-icon {
-    font-size: 2rem;
+    font-size: 1.6rem; /* reduced on mobile */
   }
 
   .brands-track {

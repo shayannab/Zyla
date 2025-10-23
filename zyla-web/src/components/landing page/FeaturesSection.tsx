@@ -27,10 +27,10 @@ const features = [
     icon: Lock,
   },
   {
-    title: "xyz",
+    title: "Smart Budgeting",
     description:
-      "Your data is encrypted and privacy-first.",
-    tags: ["ENCRYPTED", "PRIVATE", "SECURE"],
+      "Set custom budgets and get AI recommendations to stay on track.",
+    tags: ["ENCAUTOMATED ", "CUSTOM ", "GOALSRYPTED"],
     icon: Sparkles,
   },
 ];

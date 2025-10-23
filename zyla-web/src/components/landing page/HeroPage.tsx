@@ -42,18 +42,13 @@ const HeroPage: React.FC = () => {
     <>
       <div className="hero-bg">
         {/* Wheel as background element */}
-        <img
-          src={wheelImg}
-          alt="Spinning Wheel"
-          className="hero-wheel"
-          style={{
-            left: '50%',
-            top: '-400px',
-            position: 'absolute',
-            zIndex: 0,
-            transform: `translateX(-50%) rotate(${scrollY * 0.2}deg)`
-          }}
-        />
+        <div className="hero-wheel-wrapper">
+          <img
+            src={wheelImg}
+            alt="Spinning Wheel"
+            className="hero-wheel"
+          />
+        </div>
         <Navbar />
         {/* Animated Cursor Follower */}
         <div 
@@ -82,7 +77,7 @@ const HeroPage: React.FC = () => {
           MARKET CAP: $2.1T
         </div>
 
-        <div className="hero-content" style={{ position: 'relative', transform: `translateY(${scrollY * 0.5}px)` }}>
+  <div className="hero-content" style={{ position: 'relative', transform: `translateY(${scrollY * 0.5}px)` }}>
           <div style={{ position: 'relative', zIndex: 2 }} className="hero-text-container">
             <h1 className="hero-title nowrap">Your Money Deserves</h1>
             <h1 className="hero-title"><span className="glow-text">Better Insights</span></h1>
