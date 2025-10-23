@@ -55,6 +55,9 @@
   line-height: 1.2;
 }
 
+.brand-card svg {
+  color: inherit; /* Inherits from parent div's style */
+}
 .brands-subtitle {
   font-family: 'Inter', sans-serif;
   font-size: 0.95rem;
@@ -85,6 +88,10 @@
   );
 }
 
+.brand-card * {
+  transition: all 0.3s ease;
+}
+
 .brands-track {
   display: flex;
   align-items: center;
@@ -105,6 +112,33 @@
     transform: translateX(-50%);
   }
 }
+.brand-card::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 1rem;
+  padding: 2px;
+  background: linear-gradient(135deg, transparent, currentColor, transparent);
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.brand-card:hover::after {
+  opacity: 0.3;
+}
+@keyframes pulse-glow {
+  0%, 100% {
+    filter: drop-shadow(0 0 8px currentColor);
+  }
+  50% {
+    filter: drop-shadow(0 0 16px currentColor);
+  }
+}
+
 
 .brand-card {
   flex: 0 0 auto;
@@ -123,6 +157,7 @@
   position: relative;
   overflow: hidden;
   cursor: pointer;
+
 }
 
 .brand-card::before {
@@ -147,17 +182,20 @@
 }
 
 .brand-logo {
-  height: 30px; /* reduced logo height */
+  height: 32px; /* Slightly larger for better visibility */
   width: auto;
+  max-width: 120px;
   object-fit: contain;
-  filter: brightness(1.2) contrast(1.05) drop-shadow(0 0 8px rgba(96, 165, 250, 0.25));
+  transition: all 0.4s ease;
+  filter: brightness(0.9) contrast(1.1);
+
 }
 
-.brand-card:hover .brand-icon {
-  transform: scale(1.1) rotate(5deg);
-  filter: drop-shadow(0 0 20px rgba(96, 165, 250, 0.4));
+.brand-card:hover .brand-logo {
+  filter: brightness(1.2) contrast(1.2) drop-shadow(0 0 12px currentColor);
+  transform: scale(1.15);
+   animation: pulse-glow 2s ease-in-out infinite;
 }
-
 .brand-info {
   text-align: center;
   z-index: 2;

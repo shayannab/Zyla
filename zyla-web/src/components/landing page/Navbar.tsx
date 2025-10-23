@@ -52,18 +52,18 @@ const Navbar: React.FC = () => {
           </Link>
         </li>
         {isLoggedIn ? (
-          <li>
-            <Link to="/accounts" className="account-icon-link">
-              <User size={20} color="white" />
-            </Link>
-          </li>
-        ) : (
-          <li>
-            <Link to="/auth" className="navbar-btn">
-              Log In
-            </Link>
-          </li>
-        )}
+  <li>
+    <Link to="/account" className="account-icon-link" aria-label="Account">
+      <User size={20} color="white" />
+    </Link>
+  </li>
+) : (
+  <li>
+    <Link to="/auth" className="navbar-btn">
+      Log In
+    </Link>
+  </li>
+)}
       </ul>
     </nav>
   );

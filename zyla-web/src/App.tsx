@@ -15,6 +15,7 @@ import RoadmapPage from "./components/static/RoadmapPage";
 import PrivacyPolicyPage from "./components/static/PrivacyPolicyPage";
 import TermsOfServicePage from "./components/static/TermsOfServicePage";
 import AccountsPage from "./components/dashboard/AccountsPage";
+import UserAccount from './components/landing page/UserAccount';
 import InsightsPage from "./components/dashboard/InsightsPage";
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
         <Route path="/signup" element={<RegisterPage />} />
   <Route path="/about" element={<AboutUsPage />} />
   <Route path="/contact" element={<ContactPage />} />
+   <Route path="/account" element={<UserAccount />} />
   <Route path="/roadmap" element={<RoadmapPage />} />
   <Route path="/privacy" element={<PrivacyPolicyPage />} />
   <Route path="/terms" element={<TermsOfServicePage />} />
