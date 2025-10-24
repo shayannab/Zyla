@@ -39,16 +39,29 @@ const PORT = process.env.PORT || 5000;
 app.use(helmet());
 // CORS configuration: allow the frontend deployed on Vercel plus localhost for dev
 const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',') || [
+  'https://zyla-app.vercel.app', // ✅ your actual Vercel domain
   'https://zyla-frontend.vercel.app',
   'https://zyla.vercel.app',
-  'http://localhost:3000'
+  'http://localhost:3000',
 ];
-app.use(cors({
-  origin: allowedOrigins,
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true,
-}));
+
+app.use(
+  cors({
+    origin: function (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) {
+        // Allow requests with no origin (like mobile apps or curl)
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.includes(origin)) return callback(null, true);
+        return callback(new Error(`CORS blocked from origin: ${origin}`), false);
+      },
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  })
+);
+
+// 👇 This line is KEY for preflight requests
+app.options("*", cors());
+
 
 // Rate limiting - FREE tier friendly
 const limiter = rateLimit({
