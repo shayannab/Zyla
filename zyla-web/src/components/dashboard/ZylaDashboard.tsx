@@ -11,7 +11,8 @@ import {
   PieChart, 
   Lightbulb, 
   Settings, 
-  
+  Search,
+  User,
   ArrowDownRight,
   ArrowUpRight
 } from 'lucide-react';
@@ -397,9 +398,9 @@ const ZylaDashboard: FC = () => {
         </div>
         <div className="flex items-center gap-4">
           <button className="p-2 rounded-full hover:bg-white/10 transition"><Settings size={20} color="white" /></button>
-          <button className="p-2 rounded-full hover:bg-white/10 transition"><svg width="20" height="20" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="9" cy="9" r="7" /><line x1="16" y1="16" x2="12.5" y2="12.5" /></svg></button>
+          <button className="p-2 rounded-full hover:bg-white/10 transition"><Search size={20} color="white" /></button>
           <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-semibold text-lg shadow-lg">
-            {dashboardData?.user?.name?.charAt(0).toUpperCase() || 'U'}
+            <User size={18} />
           </div>
         </div>
       </nav>
