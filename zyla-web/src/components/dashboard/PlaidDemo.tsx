@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Building2, Rocket, CheckCircle2, AlertTriangle, Check } from 'lucide-react';
 
 // Types
