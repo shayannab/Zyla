@@ -59,8 +59,9 @@ app.use(
   })
 );
 
-// 👇 This line is KEY for preflight requests
-app.options("*", cors());
+// Note: explicit `app.options('*', cors())` is optional because we already use the CORS middleware
+// via `app.use(cors(...))` above. If you hit preflight issues in some environments, we can
+// re-enable a more specific preflight handler using the same cors options.
 
 
 // Rate limiting - FREE tier friendly
