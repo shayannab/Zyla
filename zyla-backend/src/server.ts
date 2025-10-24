@@ -37,9 +37,17 @@ const PORT = process.env.PORT || 5000;
 
 // Security middleware
 app.use(helmet());
+// CORS configuration: allow the frontend deployed on Vercel plus localhost for dev
+const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',') || [
+  'https://zyla-frontend.vercel.app',
+  'https://zyla.vercel.app',
+  'http://localhost:3000'
+];
 app.use(cors({
-  origin: process.env.ALLOWED_ORIGINS?.split(',') || ['http://localhost:3000', 'http://localhost:19006'],
-  credentials: true
+  origin: allowedOrigins,
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
 }));
 
 // Rate limiting - FREE tier friendly
