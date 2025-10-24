@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, type FC, type ChangeEvent, type FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import { authAPI } from '../../services/api';
 import logo from '../../assests/logo.png';
 
-const RegisterPage: React.FC = () => {
+const RegisterPage: FC = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -39,7 +39,7 @@ const RegisterPage: React.FC = () => {
   }, [navigate]);
 
   // Memoize handlers to prevent re-renders
-  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
@@ -57,7 +57,7 @@ const RegisterPage: React.FC = () => {
     setShowConfirmPassword(prev => !prev);
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     
     // Validation

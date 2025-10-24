@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type FC } from "react";
 import "./CTAsection.css";
 
-const CTASection: React.FC = () => {
+const CTASection: FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const [email, setEmail] = useState("");
   const [isVisible, setIsVisible] = useState(false);

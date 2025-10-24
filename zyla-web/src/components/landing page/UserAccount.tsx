@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState, type FC, type ElementType } from 'react';
 import { Link } from 'react-router-dom';
 import {
   User as UserIcon,
@@ -18,7 +18,7 @@ type User = { name?: string; email?: string };
 type MessageType = '' | 'success' | 'error';
 type Message = { type: MessageType; text: string };
 
-const UserAccount: React.FC = () => {
+const UserAccount: FC = () => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState<'profile' | 'security' | 'account'>('profile');
@@ -107,7 +107,7 @@ const UserAccount: React.FC = () => {
     }
   };
 
-const tabs: { id: 'profile' | 'security' | 'account'; label: string; icon: React.ElementType }[] = [
+const tabs: { id: 'profile' | 'security' | 'account'; label: string; icon: ElementType }[] = [
   { id: 'profile', label: 'Profile', icon: UserIcon },
   { id: 'security', label: 'Security', icon: Shield },
   { id: 'account', label: 'Account', icon: Cog },

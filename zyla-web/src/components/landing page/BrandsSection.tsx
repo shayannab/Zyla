@@ -1,7 +1,7 @@
-import React from "react";
+import { type FC } from "react";
 import "./BrandsSection.css";
 
-const BrandsSection: React.FC = () => {
+const BrandsSection: FC = () => {
   const zylaLogo = require("../../assests/logo.png");
 
   const companies = [

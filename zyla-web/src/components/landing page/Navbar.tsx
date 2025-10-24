@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, type FC } from "react";
 import { Link } from "react-router-dom";
 import { User } from "lucide-react";
 import "./Navbar.css";
 import logo from "../../assests/logo.png";
 
-const Navbar: React.FC = () => {
+const Navbar: FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {

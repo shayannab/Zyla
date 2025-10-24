@@ -1,4 +1,4 @@
-import React from 'react';
+import { type ReactNode, type FC } from 'react';
 import { Wallet, CreditCard, BarChart3, TrendingUp, ArrowUpRight, ArrowDownRight } from 'lucide-react';
 
 interface OverviewCard {
@@ -17,7 +17,7 @@ const overviewData: OverviewCard[] = [
   { id: 4, label: 'Investments', value: '$18,420', change: '+5.3%', icon: <TrendingUp size={22} color="white" />, trend: 'up' }
 ];
 
-const OverviewCards: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
+const OverviewCards: FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       {overviewData.map((card) => (

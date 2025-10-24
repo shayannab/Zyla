@@ -1,8 +1,8 @@
-import React from "react";
+import { FC } from "react";
 import HeroPage from "./HeroPage";
 import BrandsSection from "./BrandsSection";
 
-const MainPage: React.FC = () => {
+const MainPage: FC = () => {
   return (
     <div style={{ 
       margin: 0, 
@@ -21,6 +21,9 @@ const MainPage: React.FC = () => {
   );
 };
 export default MainPage;
+
+
+
 
 
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, type FC } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 interface RevenueData {
@@ -22,7 +22,7 @@ const weeklyData: RevenueData[] = [
   { period: 'Week 4', amount: 12300 },
 ];
 
-const RevenueChart: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
+const RevenueChart: FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
   const [timeframe, setTimeframe] = useState<'monthly' | 'weekly'>('monthly');
   const data = timeframe === 'monthly' ? monthlyData : weeklyData;
 

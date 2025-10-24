@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, type FC } from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, MessageSquare, Building2, Zap } from 'lucide-react';
 import logo from '../../assests/logo.png';
 import './ContactPage.css';
 
-const ContactPage: React.FC = () => {
+const ContactPage: FC = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',

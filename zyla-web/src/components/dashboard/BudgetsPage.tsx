@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, type FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, Plus } from 'lucide-react';
 import { isDemoUser } from '../../utils/demoMode';
@@ -31,7 +31,7 @@ const mockBudgets: Budget[] = [
   { id: '4', category: 'Shopping', monthlyLimit: 300, spent: 245, isActive: true },
 ];
 
-const BudgetsPage: React.FC = () => {
+const BudgetsPage: FC = () => {
   const navigate = useNavigate();
   const [budgets, setBudgets] = useState<Budget[]>(isDemoUser() ? mockBudgets : []);
   const [showAddModal, setShowAddModal] = useState(false);

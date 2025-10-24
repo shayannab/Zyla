@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, type FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Building2, CreditCard as CreditCardIcon, MoreVertical, Plus, ChevronLeft } from 'lucide-react';
 import { isDemoUser } from '../../utils/demoMode';
 
-const AccountsPage: React.FC = () => {
+const AccountsPage: FC = () => {
   const navigate = useNavigate();
   const [accounts, setAccounts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);

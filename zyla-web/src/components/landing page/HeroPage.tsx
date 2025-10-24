@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState, type FC } from "react";
 import { useNavigate } from "react-router-dom";
 import "./HeroPage.css";
 import FeaturesSection from "./FeaturesSection";
@@ -12,7 +12,7 @@ import Footer from "./Footer";
 import Navbar from "./Navbar";
 import wheelImg from "../../assests/wheel.png";
 
-const HeroPage: React.FC = () => {
+const HeroPage: FC = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [scrollY, setScrollY] = useState(0);
   const navigate = useNavigate();

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, type FC } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../assests/logo.png';
 import './RoadmapPage.css';
@@ -26,7 +26,7 @@ import {
   Lightbulb
 } from 'lucide-react';
 
-const RoadmapPage: React.FC = () => {
+const RoadmapPage: FC = () => {
   const [selectedQuarter, setSelectedQuarter] = useState('all');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 

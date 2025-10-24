@@ -1,4 +1,4 @@
-import React from "react";
+// Using the new JSX transform — explicit React default import not required
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HeroPage from "./components/landing page/HeroPage";
 import ZylaDashboard from "./components/dashboard/ZylaDashboard";

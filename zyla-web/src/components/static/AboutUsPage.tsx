@@ -1,10 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type FC } from 'react';
 import { Link } from 'react-router-dom';
 import { Target, Rocket, Users, Shield, Zap, TrendingUp, Award, Mail } from 'lucide-react';
 import './AboutUsPage_NEW.css';
 import logo from '../../assests/logo.png';
 
-const AboutUsPage: React.FC = () => {
+const AboutUsPage: FC = () => {
   const cardsRef = useRef<Array<HTMLDivElement | null>>([]);
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);

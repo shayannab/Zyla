@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState, type FC } from 'react';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { authAPI } from '../../services/api';
 
@@ -8,7 +8,7 @@ import { authAPI } from '../../services/api';
  * - Redirects to /login if no/invalid token.
  * - Renders child routes via <Outlet /> when authenticated.
  */
-const ProtectedRoute: React.FC = () => {
+const ProtectedRoute: FC = () => {
   const location = useLocation();
   const [checking, setChecking] = useState(true);
   const [authed, setAuthed] = useState(false);

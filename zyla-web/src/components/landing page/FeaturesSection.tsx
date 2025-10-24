@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef, type FC } from "react";
 import { BarChart3, Bot, Lock, Sparkles } from "lucide-react";
 import "./FeaturesSection.css";
 
@@ -35,7 +35,7 @@ const features = [
   },
 ];
 
-const FeaturesSection: React.FC = () => {
+const FeaturesSection: FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const cardsRef = useRef<Array<HTMLDivElement | null>>([]);
 

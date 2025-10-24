@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, type FC } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../assests/logo.png';
 import './PrivacyPolicyPage.css';
 
-const PrivacyPolicyPage: React.FC = () => {
+const PrivacyPolicyPage: FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {

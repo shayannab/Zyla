@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, type FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AlertTriangle, TrendingUp, Lightbulb, Bell, Brain, ChevronLeft } from 'lucide-react';
 import { isDemoUser } from '../../utils/demoMode';
@@ -13,7 +13,7 @@ interface Insight {
   createdAt: string;
 }
 
-const InsightsPage: React.FC = () => {
+const InsightsPage: FC = () => {
   const navigate = useNavigate();
   const [insights, setInsights] = useState<Insight[]>([]);
   const [loading, setLoading] = useState(true);
