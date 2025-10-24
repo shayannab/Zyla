@@ -42,7 +42,7 @@ const getCategoryColor = (category: string) => {
 
 const TransactionsPage: React.FC = () => {
   const navigate = useNavigate();
-  const [transactions, setTransactions] = useState(isDemoUser() ? mockTransactions : []);
+  const [transactions] = useState(isDemoUser() ? mockTransactions : []);
   const [searchQuery, setSearchQuery] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('all');
   const [typeFilter, setTypeFilter] = useState('all');

@@ -9,7 +9,6 @@ type PlaidOnExit = (error?: any, metadata?: any) => void;
 const PlaidLinkIntegration: React.FC<{ onSuccess?: PlaidOnSuccess; onExit?: PlaidOnExit }> = ({ onSuccess, onExit }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [linkToken, setLinkToken] = useState<string | null>(null);
 
   // Get API base URL from environment
   const API_BASE = (process.env.REACT_APP_API_URL as string) || 'http://localhost:5000';
@@ -48,9 +47,8 @@ const PlaidLinkIntegration: React.FC<{ onSuccess?: PlaidOnSuccess; onExit?: Plai
         throw new Error('Failed to create link token');
       }
 
-      const data = await response.json();
-      setLinkToken(data.link_token);
-      return data.link_token as string;
+  const data = await response.json();
+  return data.link_token as string;
     } catch (err: any) {
       setError(err.message || 'Link token creation failed');
       console.error('Link token creation failed:', err);

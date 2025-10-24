@@ -145,20 +145,7 @@ const OverviewCardSkeleton = () => (
   </div>
 );
 
-const AccountCardSkeleton = () => (
-  <div className="p-4 rounded-xl glass-card">
-    <div className="flex items-center justify-between">
-      <div className="space-y-2">
-        <Skeleton className="h-4 w-40" />
-        <Skeleton className="h-3 w-28" />
-      </div>
-      <div className="text-right space-y-2">
-        <Skeleton className="h-5 w-24 ml-auto" />
-        <Skeleton className="h-3 w-28 ml-auto" />
-      </div>
-    </div>
-  </div>
-);
+/* AccountCardSkeleton was removed because it was declared but never used. */
 
 const InsightItemSkeleton = () => (
   <div className="p-4 rounded-xl border bg-transparent border-white/20">
@@ -338,11 +325,7 @@ const ZylaDashboard: FC = () => {
     alert('Bank connected successfully! Data is syncing...');
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem('zyla_token');
-    localStorage.removeItem('zyla_user');
-    window.location.href = '/login';
-  };
+  // logout behavior removed (not used). If you want a logout button, re-add handler and wire it to a UI control.
 
   // Note: We now show inline skeletons instead of a blocking full-screen loader
 
