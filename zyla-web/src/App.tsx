@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HeroPage from "./components/landing page/HeroPage";
-import FinanceDashboard from "./components/dashboard/FinanceDashboard";
 import ZylaDashboard from "./components/dashboard/ZylaDashboard";
 import LoginPage from "./components/auth/login";
 import RegisterPage from "./components/auth/RegisterPage";
