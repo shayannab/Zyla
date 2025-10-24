@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState, type FC } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { 
   Wallet, 
@@ -11,9 +11,7 @@ import {
   PieChart, 
   Lightbulb, 
   Settings, 
-  LogOut,
-  ChevronLeft,
-  ChevronRight,
+  
   ArrowDownRight,
   ArrowUpRight
 } from 'lucide-react';
@@ -39,7 +37,7 @@ const formatDate = (dateString: string) => {
 };
 
 // Plaid Link Button Component
-const PlaidLinkButton: React.FC<{ onSuccess?: () => void }> = ({ onSuccess }) => {
+const PlaidLinkButton: FC<{ onSuccess?: () => void }> = ({ onSuccess }) => {
   const [loading, setLoading] = useState(false);
   const API_BASE = 'http://localhost:5000';
 
@@ -132,7 +130,7 @@ const PlaidLinkButton: React.FC<{ onSuccess?: () => void }> = ({ onSuccess }) =>
 };
 
 // Lightweight skeleton helpers
-const Skeleton: React.FC<{ className?: string }> = ({ className = '' }) => (
+const Skeleton: FC<{ className?: string }> = ({ className = '' }) => (
   <div className={`skeleton-shimmer rounded ${className}`} />
 );
 
@@ -208,7 +206,7 @@ const AccountItemSkeleton = () => (
 );
 
 // Main Dashboard Component
-const ZylaDashboard: React.FC = () => {
+const ZylaDashboard: FC = () => {
   const [loading, setLoading] = useState(true);
   const [dashboardData, setDashboardData] = useState<any>(null);
   const [insights, setInsights] = useState<any[]>([]);

@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 
 // API Base URL - uses proxy in development
 const API_BASE_URL = process.env.NODE_ENV === 'production' 
