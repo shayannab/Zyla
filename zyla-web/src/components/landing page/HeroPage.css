@@ -122,21 +122,28 @@
 
 .hero-wheel-wrapper {
   position: fixed;
-  top: -250px;
+  /* place wheel slightly below the top so it doesn't overlap mobile chrome */
+  top: 6vh;
   left: 50%;
   transform: translateX(-50%);
   z-index: 0;
   pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .hero-wheel {
-  width: 500px;
-  height: 500px;
+  /* responsive sizing: scale with viewport but never exceed 500px */
+  width: min(72vw, 500px);
+  height: auto;
+  aspect-ratio: 1 / 1;
   animation: spin 20s linear infinite;
   margin-bottom: 2rem;
   filter: drop-shadow(0 0 60px rgba(212, 232, 255, 0.4));
   opacity: 0.5;
-  transform-origin: 50% 50%;
+  transform-origin: center center;
+  max-width: 500px;
 }
 
 @keyframes spin {
@@ -337,8 +344,8 @@
 
 /* Responsive */
 @media (max-width: 1024px) {
-  .hero-wheel { width: 450px; height: 450px; }
-  .hero-wheel-wrapper { top: -225px; }
+  .hero-wheel { width: min(68vw, 450px); }
+  .hero-wheel-wrapper { top: 8vh; }
   .hero-title {
     font-size: 3rem;
   }
@@ -354,8 +361,8 @@
     padding-top: 3rem;
   }
   
-  .hero-wheel { width: 400px; height: 400px; }
-  .hero-wheel-wrapper { top: -200px; }
+  .hero-wheel { width: min(80vw, 400px); }
+  .hero-wheel-wrapper { top: 9vh; }
 
   .hero-title { 
     font-size: 2.5rem;
@@ -391,8 +398,8 @@
 }
 
 @media (max-width: 480px) {
-  .hero-wheel { width: 350px; height: 350px; }
-  .hero-wheel-wrapper { top: -175px; }
+  .hero-wheel { width: min(88vw, 350px); }
+  .hero-wheel-wrapper { top: 10vh; }
 
   .hero-title { 
     font-size: 2rem;
