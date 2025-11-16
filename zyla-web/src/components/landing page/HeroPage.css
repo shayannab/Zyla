@@ -45,7 +45,7 @@
   width: 100%;
   height: 100%;
   pointer-events: none;
-  z-index: 1;
+  z-index: 0;
 }
 
 .hero-bg::before {
@@ -122,33 +122,39 @@
 
 .hero-wheel-wrapper {
   position: fixed;
-  /* place wheel slightly below the top so it doesn't overlap mobile chrome */
-  top: 6vh;
+  top: 40px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 0;
+  z-index: 1;
   pointer-events: none;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
+  height: 300px;
+  overflow: hidden;
+  background: transparent;
+  padding: 0;
 }
 
 .hero-wheel {
-  /* responsive sizing: scale with viewport but never exceed 500px */
   width: min(72vw, 500px);
-  height: auto;
+  height: 500px;
   aspect-ratio: 1 / 1;
-  animation: spin 20s linear infinite;
-  margin-bottom: 2rem;
-  filter: drop-shadow(0 0 60px rgba(212, 232, 255, 0.4));
+  animation: spinFlipped 20s linear infinite;
+  margin: 0;
+  filter: none;
   opacity: 0.5;
   transform-origin: center center;
   max-width: 500px;
 }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+@keyframes spinFlipped {
+  0% { 
+    transform: translateY(-65%) scaleY(-1) rotate(0deg); 
+  }
+  100% { 
+    transform: translateY(-65%) scaleY(-1) rotate(360deg); 
+  }
 }
 
 .hero-text-container {
@@ -189,7 +195,7 @@
 .nowrap { white-space: nowrap; }
 
 .glow-text {
-  color: #ffffff; /* no blue */
+  color: #ffffff;
   text-shadow: 0 0 28px rgba(255, 255, 255, 0.35),
                0 0 54px rgba(255, 255, 255, 0.2);
   display: inline-block;
@@ -228,6 +234,7 @@
   align-items: center;
   gap: 0.5rem;
 }
+
 .cta-primary:hover {
   background: rgba(255,255,255,0.08);
   border-color: rgba(255,255,255,0.95);
@@ -345,7 +352,7 @@
 /* Responsive */
 @media (max-width: 1024px) {
   .hero-wheel { width: min(68vw, 450px); }
-  .hero-wheel-wrapper { top: 8vh; }
+  .hero-wheel-wrapper { top: 0; height: 160px; padding: 0; }
   .hero-title {
     font-size: 3rem;
   }
@@ -362,7 +369,7 @@
   }
   
   .hero-wheel { width: min(80vw, 400px); }
-  .hero-wheel-wrapper { top: 9vh; }
+  .hero-wheel-wrapper { top: 0; height: 140px; padding: 0; }
 
   .hero-title { 
     font-size: 2.5rem;
@@ -399,7 +406,7 @@
 
 @media (max-width: 480px) {
   .hero-wheel { width: min(88vw, 350px); }
-  .hero-wheel-wrapper { top: 10vh; }
+  .hero-wheel-wrapper { top: 0; height: 120px; padding: 0; }
 
   .hero-title { 
     font-size: 2rem;
